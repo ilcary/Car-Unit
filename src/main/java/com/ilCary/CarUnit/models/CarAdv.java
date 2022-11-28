@@ -1,15 +1,14 @@
 package com.ilCary.CarUnit.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "car_adv")
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
@@ -19,15 +18,21 @@ public class CarAdv {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-    private String description;
-    private int kilometers;
-    private String dateProduced;
-    private int price;
+    private String ownerName;
     private String email;
-    private int phoneNumber;
-    // vedere come implementare le foto
-    // bisognerà aggiungere qualche altra propietà in base a ciò che ci danno le api
+    private String phoneNumber;
+    private String makeAndModel;
+    private String preparation;
+    private String description;
+    private String fuelType;
+    private String power;
+    private String location;
+    private LocalDate dateProduced;
+    private Integer kilometers;
+    private Integer price;
+    private String link;
+    private Market market;
+
 
 
     //  to display on the card of the ad the processing status, notes and who done it

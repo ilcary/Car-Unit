@@ -7,7 +7,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "dealerships")
-@Data
 @NoArgsConstructor
 @Getter
 @Setter
@@ -31,6 +30,7 @@ public class Dealership {
 
   //  private List<CarLocal> fleet;
 
+    @OneToMany(mappedBy="dealership")
     private List<User> employees;
 
 

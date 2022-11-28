@@ -1,5 +1,8 @@
 package com.ilCary.CarUnit.controllers;
 
+import com.ilCary.CarUnit.DTO.converter.RoleConverter;
+import com.ilCary.CarUnit.DTOs.AddressDTO;
+import com.ilCary.CarUnit.DTOs.RoleDTO;
 import com.ilCary.CarUnit.models.Role;
 import com.ilCary.CarUnit.services.RoleService;
 import org.slf4j.Logger;
@@ -18,16 +21,15 @@ public class RoleController {
     @Autowired
     private RoleService roleService;
 
+    @Autowired
+    private RoleConverter roleConverter;
+
     //---------------------------- Post --------------------------------
 
     @PostMapping
-    public Role saveRole(
-//          TODO gestire il post
-//            @Valid
-//            @RequestParam("name") String name,
-//            @RequestParam(value="address",required=false) String address,
-    ) {
-        Role role = Role.builder().build();
+    public Role saveRole(@RequestBody RoleDTO dto) {
+        Role role = roleConverter.dtoToEntity(dto);
+
 
         logger.info("Save Role in RoleController");
         return roleService.save(role);
@@ -57,13 +59,15 @@ public class RoleController {
 
     @PutMapping("{id}")
     public Role updateRole(
-            @PathVariable("id") Long id
-//            @RequestParam("name") String name
+            @PathVariable("id") Long id,
+            @RequestBody RoleDTO dto
     ) {
 
         Role role = roleService.getById(id);
+        Role updateRole = roleConverter.dtoToEntity(dto);
 
-        //TODO gestire il put
+        if (updateRole.getRoleType()!= null)
+            role.setRoleType(updateRole.getRoleType());
 
         roleService.save(role);
         return role;

@@ -6,13 +6,13 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Builder
 @Getter
 @Setter
 @Entity
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "users")
@@ -31,8 +31,10 @@ public class User {
     @Column(unique = true, nullable = false)
     private String email;
 
+    @OneToMany(mappedBy="user")
+    private List<Task> tasks;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "dealership_id")
     private Dealership dealership;
 

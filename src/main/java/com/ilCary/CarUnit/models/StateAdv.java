@@ -23,6 +23,7 @@ public class StateAdv {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Enumerated(EnumType.STRING)
     private StateElab state;
 
     private String note;

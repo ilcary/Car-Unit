@@ -1,5 +1,7 @@
 package com.ilCary.CarUnit.controllers;
 
+import com.ilCary.CarUnit.DTO.converter.UserConverter;
+import com.ilCary.CarUnit.DTOs.UserDTO;
 import com.ilCary.CarUnit.models.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,16 +20,14 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserConverter userConverter;
+
     //---------------------------- Post ---------------------------------
 
     @PostMapping
-    public User saveUser(
-//          TODO gestire il post
-//            @Valid
-//            @RequestParam("name") String name,
-//            @RequestParam(value="address",required=false) String address,
-    ) {
-        User user = User.builder().build();
+    public User saveUser(@RequestBody UserDTO dto) {
+        User user = userConverter.dtoToEntity(dto);
 
         logger.info("Save User in UserController");
         return userService.save(user);
@@ -57,13 +57,29 @@ public class UserController {
 
     @PutMapping("{id}")
     public User updateUser(
-            @PathVariable("id") Long id
-//            @RequestParam("name") String name
+            @PathVariable("id") Long id,
+            @RequestBody UserDTO dto
     ) {
 
         User user = userService.getById(id);
+        User updateUser = userConverter.dtoToEntity(dto);
 
-        //TODO gestire il put
+        if (updateUser.getName() != null)
+            user.setName(updateUser.getName());
+        if (updateUser.getLastname() != null)
+            user.setLastname(updateUser.getLastname());
+        if (updateUser.getUsername() != null)
+            user.setUsername(updateUser.getUsername());
+        if (updateUser.getEmail() != null)
+            user.setEmail(updateUser.getEmail());
+        if (updateUser.getTasks() != null)
+            user.setTasks(updateUser.getTasks());
+        if (updateUser.getDealership() != null)
+            user.setDealership(updateUser.getDealership());
+        if (updateUser.getAddress() != null)
+            user.setAddress(updateUser.getAddress());
+
+
 
         userService.save(user);
         return user;
