@@ -1,5 +1,6 @@
 package com.ilCary.CarUnit.security;
 
+import com.ilCary.CarUnit.security.details.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,9 +15,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import softLock.security.details.UserDetailsServiceImpl;
-import softLock.security.AuthEntryPointUnauthorizedJwt;
-import softLock.security.AuthTokenFilter;
+
+
 
 @Configuration
 @EnableWebSecurity
@@ -30,7 +30,7 @@ public class WebSecurityConfig {
     private AuthEntryPointUnauthorizedJwt unauthorizedHandler;
 
     @Bean
-    public softLock.security.AuthTokenFilter authenticationJwtTokenFilter() {
+    public AuthTokenFilter authenticationJwtTokenFilter() {
         return new AuthTokenFilter();
     }
 
@@ -57,18 +57,12 @@ public class WebSecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/api/login", "/api/users/new")
+                .antMatchers(HttpMethod.POST, "/api/login","/api/users")
                 .permitAll()
-                .antMatchers(HttpMethod.GET,  "/api/games", "/api/**/pageable")
+                .antMatchers(HttpMethod.GET, "/api/all-users","/api/users","/api/comuni")
                 .permitAll()
-                .antMatchers(HttpMethod.GET, "/api/users/**")
-                .fullyAuthenticated()
-                .antMatchers(HttpMethod.PUT, "/api/**/**")
-                .fullyAuthenticated()
-                .antMatchers(HttpMethod.POST, "/api/posts/**")
-                .fullyAuthenticated()
-                .antMatchers(HttpMethod.DELETE, "/api/**")
-                .fullyAuthenticated();
+                .anyRequest()
+                .authenticated();
 
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);

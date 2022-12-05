@@ -12,7 +12,8 @@ import com.ilCary.CarUnit.services.UserService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users/") //TODO impostare la rotta
+@RequestMapping("/api/users") //TODO impostare la rotta
+@CrossOrigin("http://localhost:4200")
 public class UserController {
 
     private final Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -26,9 +27,8 @@ public class UserController {
     //---------------------------- Post ---------------------------------
 
     @PostMapping
-    public User saveUser(@RequestBody UserDTO dto) {
-        User user = userConverter.dtoToEntity(dto);
-
+    public User saveUser(@RequestBody User user) {
+        System.err.println(user.getPassword());
         logger.info("Save User in UserController");
         return userService.save(user);
     }
@@ -40,14 +40,14 @@ public class UserController {
         return userService.getAll();
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public User getUserById(@PathVariable("id") Long id) {
         return userService.getById(id);
     }
 
     //---------------------------- Delete --------------------------------
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public String deleteUserById(@PathVariable("id") Long id) {
         userService.deleteById(id);
         return "User deleted successfully";
@@ -55,7 +55,7 @@ public class UserController {
 
     //---------------------------- Put --------------------------------
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public User updateUser(
             @PathVariable("id") Long id,
             @RequestBody UserDTO dto

@@ -52,7 +52,7 @@ public class AddressController {
     //---------------------------- Delete --------------------------------
 
     @DeleteMapping("{id}")
-    public String deleteAddressById(@PathVariable("id") Long id) {
+    private String deleteAddressById(@PathVariable("id") Long id) {
         addressService.deleteById(id);
         return "Address deleted successfully";
     }
@@ -60,7 +60,7 @@ public class AddressController {
     //---------------------------- Put --------------------------------
 
     @PutMapping("{id}")
-    public Address updateAddress(
+    private Address updateAddress(
             @PathVariable("id") Long id,
             @RequestBody AddressDTO dto
     ) {

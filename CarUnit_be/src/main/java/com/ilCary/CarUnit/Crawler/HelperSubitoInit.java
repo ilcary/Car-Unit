@@ -57,7 +57,7 @@ public class HelperSubitoInit implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        test();
+       // test();
     }
 
     public WebElement waitElementToBeVisible(WebDriver driver, WebElement webElement) {

@@ -1,0 +1,11 @@
+#footer{
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: flex-end;
+  #logo{
+    width: 20%;
+object-fit: contain;
+    margin: 0 auto;
+  }
+}

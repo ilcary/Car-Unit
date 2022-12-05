@@ -1,0 +1,162 @@
+<div class="text-900 text-3xl font-bold mb-3 text-center">Cerca qui la nuova auto!</div>
+<p-accordion (onOpen)="avanzata($event)">
+  <p-accordionTab header="Ricerca" [selected]="true">
+    <form [formGroup]="form" class="signup-form" (submit)="submit()">
+      <div class="flex flex-row flex-wrap justify-content-center bg-gray-300 border-round-xl">
+
+        <div class="containerini flex flex-row flex-wrap">
+          <div class="control md:m-3 mx-2 m-1">
+            <input aria-describedby="marca-help" id="marca" placeholder="Marca" type="text" pInputText class="w-full"
+              formControlName="marca">
+          </div>
+
+          <div class="control md:m-3 mx-2 m-1">
+            <input aria-describedby="modello-help" id="modello" type="text" placeholder="Modello" pInputText
+              class="w-full" formControlName="modello">
+          </div>
+
+          <div class="control md:m-3 mx-2 m-1">
+            <input aria-describedby="prezzoA-help" id="prezzoA" type="text" placeholder="Prezzo a" pInputText
+              class="w-full" formControlName="prezzoA">
+          </div>
+        </div>
+
+        <div class="containerini flex flex-row flex-wrap align-items-center">
+          <div class="control md:m-3 mx-2 m-1">
+            <input aria-describedby="annoImmatricolazioneDa-help" id="annoImmatricolazioneDa" placeholder="Anno da"
+              type="text" pInputText class="w-full" formControlName="annoImmatricolazioneDa">
+          </div>
+
+          <div class="control md:m-3 mx-2 m-1">
+            <input aria-describedby="citta-help" id="citta" type="text" pInputText placeholder="Città" class="w-full"
+              formControlName="citta">
+          </div>
+
+          <div class="control md:m-3 mx-2 text-center m-1">
+            <button pButton pRipple label="Vai!" icon="pi pi-user" class="w-13rem" [disabled]="!form.valid"></button>
+          </div>
+        </div>
+        <!-- [disabled]="!form.valid" -->
+      </div>
+    </form>
+
+  </p-accordionTab>
+
+  <p-accordionTab header="Ricerca avanzata">
+    <form [formGroup]="formAvanzato" class="signup-form" (submit)="submit()">
+      <div class="flex flex-row flex-wrap justify-content-center bg-gray-300 border-round-xl">
+<!-- TODO! SISTEMARE I CONTAINERINI DELLA RICERCA AVANZATA -->
+        <div class="containerini flex flex-row flex-wrap">
+          <div class="control md:m-3 mx-2 m-1">
+            <input aria-describedby="marca-help" id="marca" placeholder="Marca" type="text" pInputText class="w-full"
+              formControlName="marca">
+          </div>
+
+          <div class="control md:m-3 mx-2 m-1">
+            <input aria-describedby="modello-help" id="modello" type="text" placeholder="Modello" pInputText
+              class="w-full" formControlName="modello">
+          </div>
+
+          <div class="containerini flex flex-row flex-wrap align-items-center">
+
+
+            <div class="control md:m-3 mx-2 m-1">
+              <input aria-describedby="citta-help" id="citta" type="text" pInputText placeholder="Città" class="w-full"
+                formControlName="citta">
+            </div>
+
+
+            <div class="control md:m-3 mx-2 m-1">
+              <input aria-describedby="tipoDiVeicolo-help" id="tipoDiVeicolo" type="text" pInputText
+                placeholder="Tipo di veicolo" class="w-full" formControlName="tipoDiVeicolo">
+            </div>
+
+
+            <div class="control md:m-3 mx-2 m-1">
+              <input aria-describedby="inserzionista-help" id="inserzionista" type="text" pInputText
+                placeholder="Inserzionista" class="w-full" formControlName="inserzionista">
+            </div>
+
+            <div class="control md:m-3 mx-2 m-1 flex flex-row">
+              <div>
+                <input aria-describedby="annoImmatricolazioneDa-help" id="annoImmatricolazioneDa" placeholder="Anno da"
+                type="text" pInputText class="w-full" formControlName="annoImmatricolazioneDa">
+              </div>
+              <div>
+                <input aria-describedby="annoImmatricolazioneA-help" id="annoImmatricolazioneA" type="text" pInputText
+                placeholder="Anno a" class="w-full" formControlName="annoImmatricolazioneA">
+              </div>
+            </div>
+          </div>
+
+            <div class="control md:m-3 mx-2 m-1 flex flex-row">
+              <div>
+                <input aria-describedby="prezzoDa-help" id="prezzoDa" type="text" pInputText placeholder="Prezzo da"
+                  class="w-full" formControlName="prezzoDa">
+              </div>
+              <div>
+                <input aria-describedby="prezzoA-help" id="prezzoA" type="text" placeholder="Prezzo a" pInputText
+                  class="w-full" formControlName="prezzoA">
+              </div>
+            </div>
+          </div>
+
+
+          <div class="control md:m-3 mx-2 m-1 flex flex-row">
+            <div>
+              <input aria-describedby="kmDa-help" id="kmDa" type="text" pInputText placeholder="Km da" class="w-full"
+                formControlName="kmDa">
+            </div>
+            <div>
+              <input aria-describedby="kmA-help" id="kmA" type="text" pInputText placeholder="Km a" class="w-full"
+                formControlName="kmA">
+            </div>
+          </div>
+
+
+          <div class="control md:m-3 mx-2 m-1">
+            <input aria-describedby="tipologiaAuto-help" id="tipologiaAuto" type="text" pInputText
+              placeholder="Tipologia auto" class="w-full" formControlName="tipologiaAuto">
+          </div>
+
+
+          <div class="control md:m-3 mx-2 m-1">
+            <input aria-describedby="carburante-help" id="carburante" type="text" pInputText placeholder="Carburante"
+              class="w-full" formControlName="carburante">
+          </div>
+
+
+          <div class="control md:m-3 mx-2 m-1">
+            <input aria-describedby="cambio-help" id="cambio" type="text" pInputText placeholder="Cambio" class="w-full"
+              formControlName="cambio">
+          </div>
+
+
+          <div class="control md:m-3 mx-2 m-1">
+            <input aria-describedby="porte-help" id="porte" type="text" pInputText placeholder="Porte" class="w-full"
+              formControlName="porte">
+          </div>
+
+
+          <div class="control md:m-3 mx-2 m-1">
+            <input aria-describedby="colore-help" id="colore" type="text" pInputText placeholder="Colore" class="w-full"
+              formControlName="colore">
+          </div>
+
+
+          <div class="control md:m-3 mx-2 m-1">
+            <input aria-describedby="classeDiEmissone-help" id="classeDiEmissone" type="text" pInputText
+              placeholder="Classe di emissione" class="w-full" formControlName="classeDiEmissone">
+          </div>
+
+          <div class="control md:m-3 mx-2 text-center m-1">
+            <button pButton pRipple label="Vai!" icon="pi pi-user" class="w-13rem"
+              [disabled]="!formAvanzato.valid"></button>
+          </div>
+        </div>
+        <!-- [disabled]="!form.valid" -->
+
+    </form>
+  </p-accordionTab>
+
+</p-accordion>

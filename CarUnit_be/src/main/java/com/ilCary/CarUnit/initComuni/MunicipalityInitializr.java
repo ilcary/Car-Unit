@@ -48,10 +48,10 @@ public class MunicipalityInitializr implements CommandLineRunner {
         for (List<String> stringa : records) {
 
             String[] s = stringa.get(0).split(",");
-
+          //  ABANO TERME BAGNI,PD,35031,,Veneto
             String comune = s[0];
             String provincia = s[1];
-            String cap = s[3];
+            String cap = s[2];
             String regione = s[4];
 
             Comune c = Comune.builder().comune(comune).cap(cap).regione(regione).provincia(provincia)

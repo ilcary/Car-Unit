@@ -14,7 +14,7 @@ public class Search {
 
     private String tipoDiVeicolo;//nuovo, usato o km0
     private String inserzionista;//azienda o privato
-    private String Marca;
+    private String marca;
     private String annoImmatricolazioneDa;
     private String annoImmatricolazioneA;
     private String prezzoDa;

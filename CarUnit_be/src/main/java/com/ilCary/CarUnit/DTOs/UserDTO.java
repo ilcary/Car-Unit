@@ -14,6 +14,7 @@ public class UserDTO {
     private String name;
     private String lastname;
     private String username;
+    private String password;
     private String email;
     private List<Task> tasks;
     private Dealership dealership;

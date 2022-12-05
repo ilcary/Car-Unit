@@ -1,11 +1,12 @@
-package softLock.security.details;
+package com.ilCary.CarUnit.security.details;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ilCary.CarUnit.models.User;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import softLock.entities.users.User;
+
 
 import java.io.Serial;
 import java.util.Collection;

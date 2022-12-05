@@ -1,0 +1,12 @@
+<!-- <div *ngIf="visible" class="surface-section px-4 py-5 md:px-6 lg:px-8">
+  <img id="logoCarUnit" src="../../../assets/icon/LOGO CAR UNIT PNG.png" alt="Image" class="mr-0 lg:mr-4 lg:mb-0">
+  <div class="flex lg:align-items-center flex-column lg:flex-row">
+    <p-tabMenu [model]="items" [activeItem]="items[0]" class="flex-grow-1"></p-tabMenu>
+  </div>
+</div> -->
+
+<p-menubar *ngIf="visible" [model]="items" styleClass="surface-section border-none">
+  <ng-template pTemplate="start">
+      <img src="../../../assets/icon/LOGO CAR UNIT PNG.png" alt="Image" height="50" class="mr-3">
+  </ng-template>
+</p-menubar>

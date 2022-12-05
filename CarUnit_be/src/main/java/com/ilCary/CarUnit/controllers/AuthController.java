@@ -1,5 +1,9 @@
 package com.ilCary.CarUnit.controllers;
 
+import com.ilCary.CarUnit.security.JwtUtils;
+import com.ilCary.CarUnit.security.details.UserDetailsImpl;
+import com.ilCary.CarUnit.security.login.LoginRequest;
+import com.ilCary.CarUnit.security.login.LoginResponse;
 import com.ilCary.CarUnit.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,15 +17,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import softLock.security.JwtUtils;
-import softLock.security.login.LoginRequest;
-import softLock.security.details.UserDetailsImpl;
-import softLock.security.login.LoginResponse;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(method = {RequestMethod.POST}, value = "/api")
+@CrossOrigin("http://localhost:4200")
 public class AuthController {
 
     @Autowired

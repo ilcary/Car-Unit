@@ -1,0 +1,59 @@
+$breakpoint-tablet: 768px;
+
+.containerCard{
+	box-shadow: 0 15px 30px 1px grey;
+	background: rgba(255, 255, 255, 0.90);
+	text-align: center;
+	border-radius: 5px;
+	overflow: hidden;
+	margin: 2em auto;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  @media (min-width: $breakpoint-tablet) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+
+.product-details {
+	position: relative;
+	text-align: left;
+	overflow: hidden;
+	padding: 30px;
+	height: 100%;
+	width: 100%;
+  @media (min-width: $breakpoint-tablet) {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 50%;
+  }
+}
+
+.containerCard .product-details h1{
+	font-family: 'Bebas Neue', cursive;
+	font-size: 30px;
+	color: #344055;
+	margin: 0;
+
+}
+
+.product-image {
+	transition: all 0.3s ease-out;
+	overflow: hidden;
+	height: 100%;
+	width: 100%;
+  @media (min-width: $breakpoint-tablet) {
+    width: 45%;
+  }
+}
+
+.containerCard img {
+  width: 100%;
+  height: 100%;
+
+}
+
+

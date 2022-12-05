@@ -56,50 +56,50 @@ public class StarredSearchController {
 
     //---------------------------- Put --------------------------------
 
-    @PutMapping("{id}")
-    public StarredSearch updateStarredSearch(
-            @PathVariable("id") Long id,
-            @RequestBody StarredSearchDTO dto
-    ) {
-
-        StarredSearch starredSearch = starredSearchService.getById(id);
-        StarredSearch updateStarredSearch = starredSearchConverter.dtoToEntity(dto);
-
-        if (updateStarredSearch.getUser()!= null)
-            starredSearch.setUser(updateStarredSearch.getUser());
-        if (updateStarredSearch.getCambio()!= null)
-            starredSearch.setCambio(updateStarredSearch.getCambio());
-        if (updateStarredSearch.getCarburante()!= null)
-            starredSearch.setCarburante(updateStarredSearch.getCarburante());
-        if (updateStarredSearch.getColore()!= null)
-            starredSearch.setColore(updateStarredSearch.getColore());
-        if (updateStarredSearch.getInserzionista()!= null)
-            starredSearch.setInserzionista(updateStarredSearch.getInserzionista());
-        if (updateStarredSearch.getAnnoImmatricolazioneA()!= null)
-            starredSearch.setAnnoImmatricolazioneA(updateStarredSearch.getAnnoImmatricolazioneA());
-        if (updateStarredSearch.getAnnoImmatricolazioneDa()!= null)
-            starredSearch.setAnnoImmatricolazioneDa(updateStarredSearch.getAnnoImmatricolazioneDa());
-        if (updateStarredSearch.getKmA()!= null)
-            starredSearch.setKmA(updateStarredSearch.getKmA());
-        if (updateStarredSearch.getKmDa()!= null)
-            starredSearch.setKmDa(updateStarredSearch.getKmDa());
-        if (updateStarredSearch.getClasseDiEmissone()!= null)
-            starredSearch.setClasseDiEmissone(updateStarredSearch.getClasseDiEmissone());
-        if (updateStarredSearch.getMarca()!= null)
-            starredSearch.setMarca(updateStarredSearch.getMarca());
-        if (updateStarredSearch.getPorte()!= null)
-            starredSearch.setPorte(updateStarredSearch.getPorte());
-        if (updateStarredSearch.getPrezzoA()!= null)
-            starredSearch.setPrezzoA(updateStarredSearch.getPrezzoA());
-        if (updateStarredSearch.getPrezzoDa()!= null)
-            starredSearch.setPrezzoDa(updateStarredSearch.getPrezzoDa());
-        if (updateStarredSearch.getTipoDiVeicolo()!= null)
-            starredSearch.setTipoDiVeicolo(updateStarredSearch.getTipoDiVeicolo());
-        if (updateStarredSearch.getTipologiaAuto()!= null)
-            starredSearch.setTipologiaAuto(updateStarredSearch.getTipologiaAuto());
-
-        starredSearchService.save(starredSearch);
-        return starredSearch;
-    }
+//    @PutMapping("{id}")
+//    public StarredSearch updateStarredSearch(
+//            @PathVariable("id") Long id,
+//            @RequestBody StarredSearchDTO dto
+//    ) {
+//
+//        StarredSearch starredSearch = starredSearchService.getById(id);
+//        StarredSearch updateStarredSearch = starredSearchConverter.dtoToEntity(dto);
+//
+//        if (updateStarredSearch.getUser()!= null)
+//            starredSearch.setUser(updateStarredSearch.getUser());
+//        if (updateStarredSearch.getCambio()!= null)
+//            starredSearch.setCambio(updateStarredSearch.getCambio());
+//        if (updateStarredSearch.getCarburante()!= null)
+//            starredSearch.setCarburante(updateStarredSearch.getCarburante());
+//        if (updateStarredSearch.getColore()!= null)
+//            starredSearch.setColore(updateStarredSearch.getColore());
+//        if (updateStarredSearch.getInserzionista()!= null)
+//            starredSearch.setInserzionista(updateStarredSearch.getInserzionista());
+//        if (updateStarredSearch.getAnnoImmatricolazioneA()!= null)
+//            starredSearch.setAnnoImmatricolazioneA(updateStarredSearch.getAnnoImmatricolazioneA());
+//        if (updateStarredSearch.getAnnoImmatricolazioneDa()!= null)
+//            starredSearch.setAnnoImmatricolazioneDa(updateStarredSearch.getAnnoImmatricolazioneDa());
+//        if (updateStarredSearch.getKmA()!= null)
+//            starredSearch.setKmA(updateStarredSearch.getKmA());
+//        if (updateStarredSearch.getKmDa()!= null)
+//            starredSearch.setKmDa(updateStarredSearch.getKmDa());
+//        if (updateStarredSearch.getClasseDiEmissone()!= null)
+//            starredSearch.setClasseDiEmissone(updateStarredSearch.getClasseDiEmissone());
+//        if (updateStarredSearch.getMarca()!= null)
+//            starredSearch.setMarca(updateStarredSearch.getMarca());
+//        if (updateStarredSearch.getPorte()!= null)
+//            starredSearch.setPorte(updateStarredSearch.getPorte());
+//        if (updateStarredSearch.getPrezzoA()!= null)
+//            starredSearch.setPrezzoA(updateStarredSearch.getPrezzoA());
+//        if (updateStarredSearch.getPrezzoDa()!= null)
+//            starredSearch.setPrezzoDa(updateStarredSearch.getPrezzoDa());
+//        if (updateStarredSearch.getTipoDiVeicolo()!= null)
+//            starredSearch.setTipoDiVeicolo(updateStarredSearch.getTipoDiVeicolo());
+//        if (updateStarredSearch.getTipologiaAuto()!= null)
+//            starredSearch.setTipologiaAuto(updateStarredSearch.getTipologiaAuto());
+//
+//        starredSearchService.save(starredSearch);
+//        return starredSearch;
+//    }
 
 }

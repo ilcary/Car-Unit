@@ -1,0 +1,64 @@
+
+<div class="card justify-content-center flex">
+
+  <div class=" surface-card p-4 shadow-2 border-round w-full lg:w-6 ">
+    <div class="text-center mb-5 ">
+        <img src="../../../assets/icon/LOGO CAR UNIT PNG.png" alt="Image" height="100" class="mb-3">
+        <div class="text-900 text-3xl font-medium mb-3">Benvenuto!</div>
+        <span class="text-600 font-medium line-height-3">Hai un account?</span>
+        <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer" [routerLink]="['/']">Accedi adesso!</a>
+    </div>
+
+    <div>
+      <form [formGroup]="form" class="signup-form" (submit)="submit()">
+        <label for="name" class="block text-900 font-medium mb-2">Nome</label>
+        <input aria-describedby="name-help" id="name" type="text" pInputText class="w-full mb-3" formControlName="name">
+
+        <label for="lastname" class="block text-900 font-medium mb-2">Cognome</label>
+        <input  id="lastname" type="text" pInputText class="w-full mb-3" formControlName="lastname">
+
+        <label for="username" class="block text-900 font-medium mb-2">Username</label>
+        <small id="username-help" *ngIf="" class="p-invalid">Username già in uso</small>
+        <input pTooltip="Enter your username" tooltipEvent="focus" aria-describedby="username-help" id="username" type="text" pInputText class="w-full mb-3" formControlName="username">
+
+        <label for="email" class="block text-900 font-medium mb-2">Email</label>
+        <input id="email" type="email" pInputText class="w-full mb-3" formControlName="email">
+
+          <label for="municipality" class="block text-900 font-medium mb-2">Comune</label>
+          <p-dropdown styleClass="w-full" inputId="municipality" [options]="comuni" optionLabel="comune" [filter]="true" filterBy="comune" placeholder="seleziona un comune" [showClear]="true" [virtualScrollItemSize]="30" [virtualScroll]="true" formControlName="municipality" >
+              <ng-template pTemplate="selectedItem" let-options="options">
+                <div class="country-item country-item-value p-inputGroup" *ngIf="form.value.municipality">
+                    <div>{{form.value.municipality.comune}}</div>
+                </div>
+            </ng-template>
+            <ng-template let-country pTemplate="item">
+                <div class="country-item">
+                    <div>{{country.comune}}</div>
+                </div>
+            </ng-template>
+          </p-dropdown>
+          <!-- {{form.value|json}} -->
+
+        <label for="street" class="block text-900 font-medium mt-3 mb-2">Via</label>
+        <input id="street" type="text" pInputText class="w-full mb-3" formControlName="street">
+
+        <label for="streetNum" class="block text-900 font-medium mb-2">Civico</label>
+        <input id="streetNum" type="text" pInputText class="w-full mb-3" formControlName="streetNum">
+
+        <label for="password" class="block text-900 font-medium mb-2">Password</label>
+        <small id="password-help" class="p-invalid">La password deve essere lunga minimo 8 caratteri, contenere un carattere speciale e un numero</small>
+        <input  aria-describedby="password-help" id="password" type="password" pInputText class="w-full mb-3" formControlName="password">
+
+        <label for="password2" class="block text-900 font-medium mb-2">Ripeti la password</label>
+        <input id="password2" type="password" pInputText class="w-full mb-3" formControlName="password2">
+
+        <div>
+          <button pButton pRipple label="Vai!" icon="pi pi-user" class="w-full" [disabled]="!form.valid" ></button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+  </div>

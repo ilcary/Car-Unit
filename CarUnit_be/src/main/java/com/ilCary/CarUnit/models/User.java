@@ -51,7 +51,6 @@ public class User {
     @JsonBackReference
     private Address address;
 
-    @JsonIgnore
     @Column(nullable = false)
     private String password;
     private Boolean active = true;

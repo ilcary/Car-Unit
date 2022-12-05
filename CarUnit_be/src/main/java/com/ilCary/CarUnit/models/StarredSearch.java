@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Table(name = "starred_search")
 @NoArgsConstructor
 @AllArgsConstructor
-public class StarredSearch extends Search {
+public class StarredSearch {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
