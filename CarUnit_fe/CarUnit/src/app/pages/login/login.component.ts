@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
 
   errorMsg = '';
 
-  constructor(private as: AuthService,private router: Router) { }
+  constructor(private auth: AuthService,private router: Router) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -38,8 +38,9 @@ export class LoginComponent implements OnInit {
       username: this.form.value.username,
       password: this.form.value.password
     }
-    this.as.login(logData)
+    this.auth.login(logData)
     .subscribe(res=> {
+      this.auth.saveAccessData(res)
       console.log(res)
       this.router.navigate(['/home']);
     } )

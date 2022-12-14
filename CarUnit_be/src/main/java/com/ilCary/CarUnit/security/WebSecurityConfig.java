@@ -15,7 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 
 @Configuration
@@ -57,9 +57,11 @@ public class WebSecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/api/login","/api/users")
+                .antMatchers(HttpMethod.POST, "/api/login","/api/users","/api/CarAdv/search","/api/stateAdv","/api/stateAdv/getStateByid","/api/stateAdv","/api/starredSearches/{username}")
                 .permitAll()
-                .antMatchers(HttpMethod.GET, "/api/all-users","/api/users","/api/comuni")
+                .antMatchers(HttpMethod.GET, "/api/all-users","/api/users","/api/comuni","/api/CarModels/{make}","/api/stateAdv/getStateByid","/api/starredSearches","/api/starredSearches/{id}")
+                .permitAll()
+                .antMatchers(HttpMethod.PUT,"/api/stateAdv/update")
                 .permitAll()
                 .anyRequest()
                 .authenticated();

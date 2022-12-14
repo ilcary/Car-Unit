@@ -1,52 +1,165 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Comune } from 'src/app/models/Comune';
+import { ICarAdv } from 'src/app/models/icaradv';
+import { ISearch } from 'src/app/models/iricerca';
+import { AuthService } from 'src/app/service/auth.service';
+import { CarAdvService } from 'src/app/service/car-adv.service';
+import { ComuneService } from 'src/app/service/comune.service';
+import { MessageService } from 'primeng/api';
+import { severity } from 'src/app/models/severityEnum';
+
+type esito = {
+  esito: boolean,
+  title: string,
+  description: string
+}
 
 @Component({
   selector: 'app-crawler',
   templateUrl: './crawler.component.html',
-  styleUrls: ['./crawler.component.scss']
+  styleUrls: ['./crawler.component.scss'],
+  providers: [MessageService]
 })
 export class CrawlerComponent implements OnInit {
 
+
+  loadingModels!: boolean;
+
+  username_: string = String(this.auth.getLoggedUser()?.username)
+
   form!: FormGroup;
+
+  searchName!: string;
 
   formAvanzato!: FormGroup;
 
-  constructor() {
+  fasciaAnniImmatricolazione: string[] = this.anniImmatricolazioneBuiler();
+
+  modelliAuto: string[] = ["selezionare marca"];
+
+  marcheSubito: string[] = ["Abarth", "Ac", "Acm", "Aiways", "Aixam", "Alfa romeo", "Alpina-bmw", "Alpine", "Amg", "Apal", "Ariel", "Aro", "Asia motors", "Aston martin", "Austin rover", "Autobianchi", "Auverland", "Bellier", "Bentley", "Bertone", "Biagini", "Bmw", "Boxel", "Bugatti", "Buick", "Cadillac", "Carletti", "Casalini", "Caterham", "Chatenet", "Chevrolet", "Chrysler", "Citroen", "Citycar", "Cmc (carletti)", "Corvette", "Cupra", "Dacia", "Daewoo", "Daihatsu", "Daimler", "Dallara", "De la chapelle", "De tomaso", "Dfsk", "Dodge", "Donkervoort", "Dr", "Ds", "Ducati energia", "Effedi", "Eli", "Emc", "Epocar", "Evo", "Feab", "Ferrari", "Fiat", "Fisker", "Ford", "Fso", "Gem", "Ginetta", "Giotti victoria", "Giottiline", "Goupil", "Great wall motor", "Grecav", "Green company", "Haval", "Honda", "Hummer", "Hyundai", "Iato", "Ineos", "Infiniti", "Innocenti", "Iso", "Isuzu", "Italcar", "Iveco", "Jaguar", "Jdm", "Jeep", "Kia", "Lada", "Lamborghini", "Lancia", "Land rover", "Lexus", "Ligier", "Lotus", "Luaz (volin)", "Lynk&co", "Mahindra", "Marcos", "Martin motors", "Maruti", "Maserati", "Maybach", "Mazda", "Mazzanti", "Mazzieri", "Mclaren", "Mega", "Melex", "Mercedes", "Meta", "Mg", "Mia electric", "Micro vett", "Microcar", "Middlebridge", "Militem", "Minauto", "Mini", "Mitsubishi", "Moke", "Moretti", "Morgan", "Mpm motors", "Mustang", "Nanocar", "Nissan", "Nissan spagna", "Noble", "Oltcit", "Omai", "Opel", "Oto melara", "P.g.o.", "Pagani", "Panther", "Peugeot", "Piaggio", "Polestar", "Pontiac", "Porsche", "Puma italia", "Qvale", "Rayton fissore", "Regis", "Renault", "Rolls royce", "Romeo ferraris", "Saab", "Saleen", "Santana", "Savel-erad", "Seat", "Seca", "Secma", "Seres", "Shuanghuan", "Skoda", "Smart", "Ssangyong", "Start lab", "Suzuki", "Talbot", "Tasso", "Tata", "Tazzari ev", "Tesla", "Today sunshine", "Torpedo", "Town life", "Toyota", "Tvr", "Uaz", "Umm", "Valentini", "Venturi", "Volga", "Volkswagen", "Volkswagen messico", "Volvo", "Xev", "Xindayang", "Yugo", "Zaz", "Zd"];
+
+  fasciaKmDaSubito: string[] = ["Km 0", "0", "5.000", "10.000", "15.000", "20.000", "25.000", "30.000", "35.000", "40.000", "45.000", "50.000", "55.000", "60.000", "65.000", "70.000", "75.000", "80.000", "85.000", "90.000", "95.000", "100.000", "110.000", "120.000", "130.000", "140.000", "150.000", "160.000", "170.000", "180.000", "190.000", "200.000", "250.000", "300.000", "350.000", "400.000", "450.000", "500.000"];
+
+  fasciaKmASubito: string[] = ["km 0", "4.999", "9.999", "14.999", "19.999", "24.999", "29.999", "34.999", "39.999", "44.999", "49.999", "54.999", "59.999", "64.999", "69.999", "74.999", "79.999", "84.999", "89.999", "94.999", "99.999", "109.999", "119.999", "129.999", "139.999", "149.999", "159.999", "169.999", "179.999", "189.999", "199.999", "249.999", "299.999", "349.999", "399.999", "449.999", "499.999"];
+
+  fasciaPrezziSubito: string[] = ["500", "1.000", "2.000", "3.000", "4.000", "5.000", "6.000", "7.000", "8.000", "9.000", "10.000", "11.000", "12.000", "13.000", "14.000", "15.000", "16.000", "17.000", "18.000", "19.000", "20.000", "21.000", "22.000", "23.000", "24.000", "25.000", "26.000", "27.000", "28.000", "29.000", "30.000", "35.000", "40.000", "45.000", "50.000", "60.000", "70.000", "80.000", "90.000", "120.000", "150.000", "250.000", "500.000", "1.000.000", "2.500.000",];
+
+  tipologiaAuto: string[] = ["Utilitaria", "Berlina", "Station Wagon", "Monovolume", "SUV/Fuoristrada", "Cabrio", "Coupè", "City Car", "Altro"];
+
+  tipologiaAnnuncio: string[] = ["Privato", "Azienda"];
+
+  tipologiaCarburante: string[] = ["Benzina", "Diesel", "Gpl", "Elettrica", "Ibrida", "Metano", "Altro"];
+
+  tipologiaColore: string[] = ["bianco", "grigio", "marrone", "rosso", "giallo", "verde", "blu"];
+
+  classiDiEmissone: string[] = ["euro 6", "euro 5", "euro 4", "euro 3", "euro 2", "euro 1", "pre-euro"];
+
+  tipoCambio: string[] = ["Manuale", "Automatico", "Sequenziale", "Altro"];
+
+  numPorte: string[] = ["2/3", "4/5", "6/7"];
+
+  comuni: Comune[] = [];
+  countries: string[] = [];
+
+  annunci: ICarAdv[] = [
+    {
+      title: 'Vw Golf 1* 1.1 b GX popi popi',
+      placeAndDate: 'ISOLA VICENTINA (VI)',
+      price: '9.999 €',
+      condition: 'Usato',
+      year: '09/1983',
+      km: '54000 Km',
+      powerSupply: 'Benzina',
+      gearbox: 'Manuale',
+      emissionClass: '',
+      link: 'https://www.subito.it/auto/vw-golf-1-1-1-b-gx-54000km-perfetta-da-amatore-vicenza-468249552.htm',
+      photoLink: 'https://images.sbito.it/api/v1/sbt-ads-images-pro/images/8c/8c337c50-075a-496e-bd22-0e1a776fb15c?rule=card-desktop-large-1x-auto',
+    },
+    {
+      title: 'Vw Golf 1* 1.1 b GX',
+      placeAndDate: 'ISOLA VICENTINA (VI)',
+      price: '9.999 €',
+      condition: 'Usato',
+      year: '09/1983',
+      km: '54000 Km',
+      powerSupply: 'Benzina',
+      gearbox: 'Manuale',
+      emissionClass: '',
+      link: 'https://www.subito.it/auto/vw-golf-1-1-1-b-gx-54000km-perfetta-da-amatore-vicenza-468249552.htm',
+      photoLink: 'https://images.sbito.it/api/v1/sbt-ads-images-pro/images/8c/8c337c50-075a-496e-bd22-0e1a776fb15c?rule=card-desktop-large-1x-auto',
+    },
+    {
+      title: 'Vw Golf 1* 1.1 b GX luca pagliaccio',
+      placeAndDate: 'ISOLA VICENTINA (VI)',
+      price: '9.999 €',
+      condition: 'Usato',
+      year: '09/1983',
+      km: '54000 Km',
+      powerSupply: 'Benzina',
+      gearbox: 'Manuale',
+      emissionClass: '',
+      link: 'https://www.subito.it/auto/vw-golf-1-1-1-b-gx-54000km-perfetta-da-amatore-vicenza-468249552.htm',
+      photoLink: 'https://images.sbito.it/api/v1/sbt-ads-images-pro/images/8c/8c337c50-075a-496e-bd22-0e1a776fb15c?rule=card-desktop-large-1x-auto',
+    },
+    {
+      title: 'Vw Golf 1* 1.1 b GX',
+      placeAndDate: 'ISOLA VICENTINA (VI)',
+      price: '9.999 €',
+      condition: 'Usato',
+      year: '09/1983',
+      km: '54000 Km',
+      powerSupply: 'Benzina',
+      gearbox: 'Manuale',
+      emissionClass: '',
+      link: 'https://www.subito.it/auto/vw-golf-1-1-1-b-gx-54000km-perfetta-da-amatore-vicenza-468249552.htm',
+      photoLink: 'https://images.sbito.it/api/v1/sbt-ads-images-pro/images/8c/8c337c50-075a-496e-bd22-0e1a776fb15c?rule=card-desktop-large-1x-auto',
+    }
+  ];
+
+  constructor(private comuneServ: ComuneService, private modelServ: CarAdvService, private auth: AuthService, private messageService: MessageService) {
     this.form = new FormGroup({
-      marca: new FormControl(null, Validators.required),
-      modello: new FormControl(null, Validators.required),
-      prezzoA: new FormControl(null, [Validators.required, Validators.email]),
-      annoImmatricolazioneDa: new FormControl(null, Validators.required),
-      citta: new FormControl(null, Validators.required),
+      marca: new FormControl(null,),
+      modello: new FormControl(null,),
+      prezzoA: new FormControl(null,),
+      annoImmatricolazioneDa: new FormControl(null,),
+      citta: new FormControl(null,),
     });
 
     this.formAvanzato = new FormGroup({
-      marca: new FormControl(this.form.value.marca, Validators.required),
-      modello: new FormControl(this.form.value.modello, Validators.required),
-      prezzoA: new FormControl(this.form.value.prezzoA, [Validators.required, Validators.email]),
-      annoImmatricolazioneDa: new FormControl(this.form.value.annoImmatricolazioneDa, Validators.required),
-      citta: new FormControl(this.form.value.citta, Validators.required),
-      tipoDiVeicolo: new FormControl(null, Validators.required),
-      inserzionista: new FormControl(null, Validators.required),
-      annoImmatricolazioneA: new FormControl(null, [Validators.required]),
-      prezzoDa: new FormControl(null, Validators.required),
-      kmDa: new FormControl(null, Validators.required),
-      kmA: new FormControl(null, Validators.required),
-      tipologiaAuto: new FormControl(null, Validators.required),
-      carburante: new FormControl(null, Validators.required),
-      cambio: new FormControl(null, Validators.required),
-      porte: new FormControl(null, Validators.required),
-      colore: new FormControl(null, Validators.required),
-      classeDiEmissone: new FormControl(null, Validators.required),
+      marca: new FormControl(this.form.value.marca,),
+      modello: new FormControl(this.form.value.modello,),
+      prezzoA: new FormControl(this.form.value.prezzoA,),
+      annoImmatricolazioneDa: new FormControl(this.form.value.annoImmatricolazioneDa,),
+      citta: new FormControl(this.form.value.citta,),
+      tipoAnnuncio: new FormControl(null,),
+      annoImmatricolazioneA: new FormControl(null, []),
+      prezzoDa: new FormControl(null,),
+      kmDa: new FormControl(null,),
+      kmA: new FormControl(null,),
+      tipologiaAuto: new FormControl(null,),
+      carburante: new FormControl(null,),
+      cambio: new FormControl(null,),
+      porte: new FormControl(null,),
+      colore: new FormControl(null,),
+      classeDiEmissone: new FormControl(null,),
     });
 
   }
 
   ngOnInit(): void {
+
+    console.log("popoipipi");
+
+    this.comuneServ.getAllComuni()
+      .subscribe(com => {
+        this.comuni = com;
+      })
+
   }
 
-  avanzata(e:Event): void {
+  avanzata(e: Event): void {
     this.formAvanzato.get('marca')?.setValue(this.form.value.marca);
     this.formAvanzato.get('modello')?.setValue(this.form.value.modello);
     this.formAvanzato.get('prezzoA')?.setValue(this.form.value.prezzoA);
@@ -55,6 +168,179 @@ export class CrawlerComponent implements OnInit {
 
   }
 
-  submit() { }
+  submit() {
+
+    let searchForm: ISearch = {
+      marca: this.form.value.marca,
+      modello: this.form.value.modello,
+      prezzoA: this.form.value.prezzoA,
+      annoImmatricolazioneDa: this.form.value.annoImmatricolazioneDa,
+      citta: this.form.value.citta,
+    };
+
+    console.log(searchForm);
+
+    this.modelServ.getAdvBySearch(searchForm)
+      .subscribe(res => {
+        console.log(res)
+        this.annunci = res;
+
+      })
+  }
+
+  submitAvanzata(): void {
+
+    let searchForm: ISearch = {
+      marca: this.formAvanzato.value.marca,
+      modello: this.formAvanzato.value.modello,
+      prezzoA: this.formAvanzato.value.prezzoA,
+      annoImmatricolazioneDa: this.formAvanzato.value.annoImmatricolazioneDa,
+      citta: this.formAvanzato.value.citta,
+      inserzionista: this.formAvanzato.value.tipoAnnuncio,
+      annoImmatricolazioneA: this.formAvanzato.value.annoImmatricolazioneA,
+      prezzoDa: this.formAvanzato.value.prezzoDa,
+      kmDa: this.formAvanzato.value.kmDa,
+      kmA: this.formAvanzato.value.kmA,
+      tipologiaAuto: this.formAvanzato.value.tipologiaAuto,
+      carburante: this.formAvanzato.value.carburante,
+      cambio: this.formAvanzato.value.cambio,
+      porte: this.formAvanzato.value.porte,
+      colore: this.formAvanzato.value.colore,
+      classeDiEmissone: this.formAvanzato.value.classeDiEmissone,
+    };
+
+    console.log(searchForm);
+
+    this.modelServ.getAdvBySearch(searchForm)
+      .subscribe(res => {
+        console.log(res)
+        this.annunci = res;
+
+      })
+
+  }
+
+  anniImmatricolazioneBuiler(): string[] {
+    let max = new Date().getFullYear()
+    let years: string[] = [];
+    for (let i = max; i >= 1980; i--) {
+      years.push(i.toString());
+    }
+    return years;
+  }
+
+  getModelliByMake(e: Event): void {
+    this.loadingModels = true;
+    let make = this.form.value.marca;
+    if (make == null) {
+      make = this.formAvanzato.value.marca;
+    };
+    if (make == null) return;
+
+    console.log(make);
+    this.modelServ.getModelsOfMake(make)//fino a che carica la chiamata mettere un loading al dropdown dei modelli
+      .subscribe(models => {
+        this.modelliAuto = models;
+        this.loadingModels = false;
+      })
+
+  }
+
+  saveSearchAdv(): void {
+
+    let searchForm: ISearch = {
+      marca: this.formAvanzato.value.marca,
+      modello: this.formAvanzato.value.modello,
+      prezzoA: this.formAvanzato.value.prezzoA,
+      annoImmatricolazioneDa: this.formAvanzato.value.annoImmatricolazioneDa,
+      citta: this.formAvanzato.value.citta,
+      inserzionista: this.formAvanzato.value.tipoAnnuncio,
+      annoImmatricolazioneA: this.formAvanzato.value.annoImmatricolazioneA,
+      prezzoDa: this.formAvanzato.value.prezzoDa,
+      kmDa: this.formAvanzato.value.kmDa,
+      kmA: this.formAvanzato.value.kmA,
+      tipologiaAuto: this.formAvanzato.value.tipologiaAuto,
+      carburante: this.formAvanzato.value.carburante,
+      cambio: this.formAvanzato.value.cambio,
+      porte: this.formAvanzato.value.porte,
+      colore: this.formAvanzato.value.colore,
+      classeDiEmissone: this.formAvanzato.value.classeDiEmissone,
+    };
+
+
+    console.log(searchForm);
+
+    this.modelServ.saveSearchAdv(this.username_, searchForm)
+      .subscribe(data => {
+        console.log(data);
+        this.showNot("Perfetto", "Ricerca salvata con successo");
+
+      })
+  }
+
+  showNot(title: string, message: string) {
+    this.messageService.add({ severity: 'success', summary: title, detail: message });
+  }
+
+  showSuccess(x: esito) {
+
+    if (x.esito) {
+      this.messageService.add({ severity: 'success', summary: x.title, detail: x.description });
+    } else {
+      this.messageService.add({ severity: 'error', summary: x.title, detail: x.description });
+    }
+
+  }
+
+  showConfirm() {
+    this.messageService.clear();
+    this.messageService.add({ key: 'c', sticky: true, severity: 'info', summary: 'Vuoi salvare  la ricerca?', detail: 'Inserire un nome e confermare' });
+  }
+
+  onConfirm() {
+
+    let searchForm: ISearch = {
+      nameSearch: this.searchName,
+      marca: this.form.value.marca,
+      modello: this.form.value.modello,
+      prezzoA: this.form.value.prezzoA,
+      annoImmatricolazioneDa: this.form.value.annoImmatricolazioneDa,
+      citta: this.form.value.citta,
+      inserzionista: this.formAvanzato.value.tipoAnnuncio,
+      annoImmatricolazioneA: this.formAvanzato.value.annoImmatricolazioneA,
+      prezzoDa: this.formAvanzato.value.prezzoDa,
+      kmDa: this.formAvanzato.value.kmDa,
+      kmA: this.formAvanzato.value.kmA,
+      tipologiaAuto: this.formAvanzato.value.tipologiaAuto,
+      carburante: this.formAvanzato.value.carburante,
+      cambio: this.formAvanzato.value.cambio,
+      porte: this.formAvanzato.value.porte,
+      colore: this.formAvanzato.value.colore,
+      classeDiEmissone: this.formAvanzato.value.classeDiEmissone,
+    };
+
+    console.log(searchForm);
+
+    this.modelServ.saveSearchAdv(this.username_, searchForm)
+      .subscribe(data => {
+        console.log(data);
+        this.showNot("Perfetto", "Ricerca salvata con successo");
+
+      })
+
+    this.messageService.clear('c');
+  }
+
+  onReject() {
+
+    this.messageService.clear('c');
+  }
+
+  checkInputNameSearch(): boolean {
+    if (this.searchName !== undefined && this.searchName !== null) {
+      return true;
+    }
+    return false;
+  }
 
 }

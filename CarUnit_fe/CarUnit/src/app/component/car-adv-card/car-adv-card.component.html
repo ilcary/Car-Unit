@@ -1,0 +1,134 @@
+<!-- <p-card header="{{adv.title}}" id="perfavore" subheader="{{adv.placeAndDate}}" class="carAdv" styleClass="p-card-shadow md:flex md:flex-row align-items-center justify-content-center m-3">
+  <ng-template pTemplate="header">
+    <img alt="Card" src="{{adv.photoLink}}">
+  </ng-template>
+
+  <div class="grid">
+    <div class="col-4">
+      <p>{{adv.condition}}</p>
+      <p>{{adv.powerSupply}}</p>
+    </div>
+    <div class="col-4">
+      <p>{{adv.year}}</p>
+      <p>{{adv.gearbox}}</p>
+    </div>
+    <div class="col-4">
+      <p>{{adv.km}}</p>
+      <p>{{adv.emissionClass}}</p>
+    </div>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <a href="{{adv.link}}" target="_blank" class="no-underline">
+      <p-button styleClass="p-1 m-1" label="Vai all'annuncio" icon="pi pi-external-link"></p-button>
+    </a>
+    <p-button (click)="showDialog()" icon="pi pi-pencil" label="Note" styleClass="p-1 m-1"></p-button>
+
+    <p-dialog header="{{adv.title}}" [(visible)]="display" [breakpoints]="{'960px': '75vw'}" [style]="{width: '50vw'}"
+      [draggable]="true" [resizable]="false">
+
+      <form [formGroup]="formCarState" class="signup-form" >
+
+        <div class="p-inputgroup">
+          <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+          <input type="text" formControlName="username" id="username">
+        </div>
+
+        <label for="state" class="block text-900 font-medium mt-4">Stato di elaborazione</label>
+        <p-dropdown [options]="this.statiDiElaborazione" formControlName="state" styleClass="w-full"
+          dropdownIcon={{getDropdownIcon()}} [showClear]="true"></p-dropdown>
+
+
+
+        <div class="block">
+          <span class="p-float-label mt-5">
+            <textarea id="float-input-note" rows="5" pInputTextarea
+              formControlName="note">
+            </textarea>
+            <label class="text-base" for="float-input">Note</label>
+          </span>
+        </div>
+
+      </form>
+      <ng-template pTemplate="footer">
+        <p-button (click)="display=false" label="Annulla" styleClass="p-button-text"></p-button>
+        <p-button *ngIf="isSave" (click)="save()" label="Salva" styleClass="p-button-text"></p-button>
+        <p-button *ngIf="!isSave" (click)="update()" label="Aggiorna" styleClass="p-button-text"></p-button>
+      </ng-template>
+    </p-dialog>
+
+  </ng-template>
+</p-card> -->
+
+
+<div class="blog-card">
+  <div class="meta">
+    <div class="photo" style="background-image: url({{adv.photoLink}})"></div>
+    <ul class="details">
+      <li><a href="{{adv.link}}" target="_blank" class="no-underline">
+        <p-button styleClass="p-1 m-1" label="Vai all'annuncio" icon="pi pi-external-link"></p-button>
+      </a>
+    </li>
+      <li>
+        <p-button (click)="showDialog()" icon="pi pi-pencil" label="Note" styleClass="p-1 m-1"></p-button>
+      </li>
+    </ul>
+  </div>
+  <div class="description">
+    <h1>{{adv.title}}</h1>
+    <h2>{{adv.placeAndDate}}</h2>
+
+     <div class="grid">
+    <div class="col-4">
+      <p id="line">{{adv.condition}}</p>
+      <p>{{adv.powerSupply}}</p>
+      <p *ngIf="showIconCardState" ><p-tag styleClass="text-base text-center white-space-nowrap" icon="{{getDropdownIcon()}}" severity="warning" value="{{this.formCarState.value.state}}"></p-tag></p>
+    </div>
+    <div class="col-4">
+      <p>{{adv.year}}</p>
+      <p>{{adv.gearbox}}</p>
+    </div>
+    <div class="col-4">
+      <p>{{adv.km}}</p>
+      <p>{{adv.emissionClass}}</p>
+    </div>
+  </div>
+
+    <p class="read-more">
+      <a href="#">Vai all'annuncio</a>
+    </p>
+  </div>
+</div>
+
+<p-dialog header="{{adv.title}}" [(visible)]="display" [breakpoints]="{'960px': '75vw'}" [style]="{width: '50vw'}"
+      [draggable]="true" [resizable]="false">
+
+      <form [formGroup]="formCarState" class="signup-form" >
+
+        <div class="p-inputgroup">
+          <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+          <input  type="text" formControlName="username" id="username">
+        </div>
+
+        <label for="state" class="block text-900 font-medium mt-4">Stato di elaborazione</label>
+        <p-dropdown [options]="this.statiDiElaborazione" formControlName="state" styleClass="w-full"
+          dropdownIcon={{getDropdownIcon()}} [showClear]="true"></p-dropdown>
+
+
+
+        <div class="block">
+          <span class="p-float-label mt-5">
+            <textarea id="float-input-note" rows="5" pInputTextarea
+              formControlName="note">
+            </textarea>
+            <label class="text-base" for="float-input">Note</label>
+          </span>
+        </div>
+
+      </form>
+      <ng-template pTemplate="footer">
+        <p-button (click)="display=false" label="Annulla" styleClass="p-button-text"></p-button>
+        <p-button *ngIf="isSave" (click)="save()" label="Salva" styleClass="p-button-text"></p-button>
+        <p-button *ngIf="!isSave && isMyNote" (click)="update()" label="Aggiorna" styleClass="p-button-text"></p-button>
+      </ng-template>
+    </p-dialog>

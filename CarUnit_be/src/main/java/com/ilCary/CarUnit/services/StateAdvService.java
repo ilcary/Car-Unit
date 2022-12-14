@@ -23,17 +23,17 @@ public class StateAdvService {
         return repository.findAll();
     }
 
-    public StateAdv getById(Long id) {
+    public StateAdv getById(String id) {
 
         Optional<StateAdv> stateAdv = repository.findById(id);
 
         if(!stateAdv.isPresent())
-            throw new NotFoundException("StateAdv not available");
+            return null;
 
         return stateAdv.get();
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(String id) {
         repository.deleteById(id);
     }
 

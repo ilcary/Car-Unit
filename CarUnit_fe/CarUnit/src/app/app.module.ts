@@ -23,6 +23,13 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TooltipModule} from 'primeng/tooltip';
 import {MenubarModule} from 'primeng/menubar';
 import {AccordionModule} from 'primeng/accordion';
+import {CardModule} from 'primeng/card';
+import {DialogModule} from 'primeng/dialog';
+import { CarAdvCardComponent } from './component/car-adv-card/car-adv-card.component';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+import { TagModule } from 'primeng/tag';
+import {ToastModule} from 'primeng/toast';
+
 
 @NgModule({
   declarations: [
@@ -33,7 +40,8 @@ import {AccordionModule} from 'primeng/accordion';
     DealershipComponent,
     CrawlerComponent,
     FooterComponent,
-    SignupComponent
+    SignupComponent,
+    CarAdvCardComponent
   ],
   imports: [
     BrowserModule,
@@ -51,6 +59,11 @@ import {AccordionModule} from 'primeng/accordion';
     TooltipModule,
     MenubarModule,
     AccordionModule,
+    CardModule,
+    DialogModule,
+    InputTextareaModule,
+    TagModule,
+    ToastModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass:AuthInterceptor,multi:true},

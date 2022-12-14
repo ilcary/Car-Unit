@@ -28,7 +28,7 @@ public class SetupRunner implements CommandLineRunner {
 
         System.out.println("popi");
 
-        roleService.save(ctx.getBean("roleAdmin", Role.class));
+        //roleService.save(ctx.getBean("roleAdmin", Role.class));
         //userService.save(ctx.getBean("popi", User.class));
 
     }

@@ -3,16 +3,21 @@ package com.ilCary.CarUnit.controllers;
 import com.ilCary.CarUnit.DTO.converter.StarredSearchConverter;
 import com.ilCary.CarUnit.DTOs.StarredSearchDTO;
 import com.ilCary.CarUnit.models.StarredSearch;
+import com.ilCary.CarUnit.models.StateAdv;
 import com.ilCary.CarUnit.services.StarredSearchService;
+import com.ilCary.CarUnit.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/starredSearchs/") //TODO impostare la rotta
+@RequestMapping("/api/starredSearches")
+@CrossOrigin("http://localhost:4200")
 public class StarredSearchController {
 
     private final Logger logger = LoggerFactory.getLogger(StarredSearchController.class);
@@ -21,17 +26,26 @@ public class StarredSearchController {
     private StarredSearchService starredSearchService;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private StarredSearchConverter starredSearchConverter;
 
     //---------------------------- Post --------------------------------
 
-    @PostMapping
-    public StarredSearch saveStarredSearch(@RequestBody StarredSearchDTO dto) {
-        StarredSearch starredSearch = starredSearchConverter.dtoToEntity(dto);
+    @PostMapping("/{username}")
+    public ResponseEntity<StarredSearch> saveStarredSearch(
+            @PathVariable("username") String username,
+            @RequestBody StarredSearch search
+    ) {
+        try {
+            search.setUser(userService.getUserByUsername(username));
+            return new ResponseEntity<>(starredSearchService.save(search), HttpStatus.OK);
+        }catch(Exception e){
+            logger.error(e.getMessage(), e);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
 
-
-        logger.info("Save StarredSearch in StarredSearchController");
-        return starredSearchService.save(starredSearch);
     }
 
     //---------------------------- Get --------------------------------
@@ -41,14 +55,14 @@ public class StarredSearchController {
         return starredSearchService.getAll();
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public StarredSearch getStarredSearchById(@PathVariable("id") Long id) {
         return starredSearchService.getById(id);
     }
 
     //---------------------------- Delete --------------------------------
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public String deleteStarredSearchById(@PathVariable("id") Long id) {
         starredSearchService.deleteById(id);
         return "StarredSearch deleted successfully";

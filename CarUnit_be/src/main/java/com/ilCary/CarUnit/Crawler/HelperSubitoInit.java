@@ -28,26 +28,21 @@ public class HelperSubitoInit implements CommandLineRunner {
 
     // ("//*[contains(@class, 'nomeclasse')]")
 
-    String[] BRANDS = {"abarth", "ac", "acm", "aiways", "aixam", "alfa romeo", "alpina-bmw", "alpine", "amg", "apal"
-            , "ariel", "aro", "asia motors", "aston martin", "austin rover", "autobianchi", "auverland", "bellier",
-            "bentley", "bertone", "biagini", "bmw", "boxel", "bugatti", "buick", "cadillac", "carletti", "casalini",
-            "caterham", "chatenet", "chevrolet", "chrysler", "citroen", "citycar", "cmc (carletti)", "corvette",
-            "cupra", "dacia", "daewoo", "daihatsu", "daimler", "dallara", "de la chapelle", "de tomaso", "dfsk",
-            "dodge", "donkervoort", "dr", "ds", "ducati energia", "effedi", "eli", "emc", "epocar", "evo", "feab",
-            "ferrari", "fiat", "fisker", "ford", "fso", "gem", "ginetta", "giotti victoria", "giottiline", "goupil",
-            "great wall motor", "grecav", "green company", "haval", "honda", "hummer", "hyundai", "iato", "ineos",
-            "infiniti", "innocenti", "iso", "isuzu", "italcar", "iveco", "jaguar", "jdm", "jeep", "kia", "lada",
-            "lamborghini", "lancia", "land rover", "lexus", "ligier", "lotus", "luaz (volin)", "lynk&co", "mahindra"
-            , "marcos", "martin motors", "maruti", "maserati", "maybach", "mazda", "mazzanti", "mazzieri", "mclaren"
-            , "mega", "melex", "mercedes", "meta", "mg", "mia electric", "micro vett", "microcar", "middlebridge",
-            "militem", "minauto", "mini", "mitsubishi", "moke", "moretti", "morgan", "mpm motors", "mustang",
-            "nanocar", "nissan", "nissan spagna", "noble", "oltcit", "omai", "opel", "oto melara", "p.g.o.",
-            "pagani", "panther", "peugeot", "piaggio", "polestar", "pontiac", "porsche", "puma italia", "qvale",
-            "rayton fissore", "regis", "renault", "rolls royce", "romeo ferraris", "saab", "saleen", "santana",
-            "savel-erad", "seat", "seca", "secma", "seres", "shuanghuan", "skoda", "smart", "ssangyong", "start lab"
-            , "suzuki", "talbot", "tasso", "tata", "tazzari ev", "tesla", "today sunshine", "torpedo", "town life",
-            "toyota", "tvr", "uaz", "umm", "valentini", "venturi", "volga", "volkswagen", "volkswagen messico",
-            "volvo", "xev", "xindayang", "yugo", "zaz", "zd"};
+    String[] BRANDS = {"Abarth","Ac","Acm","Aiways","Aixam","Alfa romeo","Alpina-bmw","Alpine","Amg","Apal","Ariel","Aro",
+            "Asia motors","Aston martin","Austin rover","Autobianchi","Auverland","Bellier","Bentley","Bertone","Biagini",
+            "Bmw","Boxel","Bugatti","Buick","Cadillac","Carletti","Casalini","Caterham","Chatenet","Chevrolet","Chrysler",
+            "Citroen","Citycar","Cmc (carletti)","Corvette","Cupra","Dacia","Daewoo","Daihatsu","Daimler","Dallara","De la chapelle",
+            "De tomaso","Dfsk","Dodge","Donkervoort","Dr","Ds","Ducati energia","Effedi","Eli","Emc","Epocar","Evo","Feab","Ferrari",
+            "Fiat","Fisker","Ford","Fso","Gem","Ginetta","Giotti victoria","Giottiline","Goupil","Great wall motor","Grecav","Green company",
+            "Haval","Honda","Hummer","Hyundai","Iato","Ineos","Infiniti","Innocenti","Iso","Isuzu","Italcar","Iveco","Jaguar","Jdm","Jeep",
+            "Kia","Lada","Lamborghini","Lancia","Land rover","Lexus","Ligier","Lotus","Luaz (volin)","Lynk&co","Mahindra","Marcos",
+            "Martin motors","Maruti","Maserati","Maybach","Mazda","Mazzanti","Mazzieri","Mclaren","Mega","Melex","Mercedes","Meta",
+            "Mg","Mia electric","Micro vett","Microcar","Middlebridge","Militem","Minauto","Mini","Mitsubishi","Moke","Moretti",
+            "Morgan","Mpm motors","Mustang","Nanocar","Nissan","Nissan spagna","Noble","Oltcit","Omai","Opel","Oto melara","P.g.o.",
+            "Pagani","Panther","Peugeot","Piaggio","Polestar","Pontiac","Porsche","Puma italia","Qvale","Rayton fissore","Regis","Renault",
+            "Rolls royce","Romeo ferraris","Saab","Saleen","Santana","Savel-erad","Seat","Seca","Secma","Seres","Shuanghuan","Skoda","Smart",
+            "Ssangyong","Start lab","Suzuki","Talbot","Tasso","Tata","Tazzari ev","Tesla","Today sunshine","Torpedo","Town life","Toyota","Tvr",
+            "Uaz","Umm","Valentini","Venturi","Volga","Volkswagen","Volkswagen messico","Volvo","Xev","Xindayang","Yugo","Zaz","Zd"};
 
 
     //salvarmi le cordinate del punto e poi dico al driover di fare un click

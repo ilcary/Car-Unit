@@ -5,8 +5,9 @@
   </div>
 </div> -->
 
-<p-menubar *ngIf="visible" [model]="items" styleClass="surface-section border-none">
+<p-menubar *ngIf="visible" [model]="items" styleClass="surface-section border-none border-bottom-2">
   <ng-template pTemplate="start">
       <img src="../../../assets/icon/LOGO CAR UNIT PNG.png" alt="Image" height="50" class="mr-3">
+      <figcaption class="text-center font-bold">{{username_}}</figcaption>
   </ng-template>
 </p-menubar>

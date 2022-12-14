@@ -16,16 +16,23 @@ import javax.persistence.*;
 public class StateAdv {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    private String username;
 
     @Enumerated(EnumType.STRING)
     private StateElab state;
 
     private String note;
+
+    @Override
+    public String toString() {
+        return "StateAdv{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", state=" + state +
+                ", note='" + note + '\'' +
+                '}';
+    }
 
 }

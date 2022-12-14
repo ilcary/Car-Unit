@@ -2,14 +2,14 @@
 	box-shadow: 0 15px 30px 1px grey;
 	background: rgba(255, 255, 255, 0.90);
 	text-align: center;
-	border-radius: 5px;
+	border-radius: 2px;
 	overflow: hidden;
 	margin: 2em auto;
   height: 100vh;//con del contenuto dentro tegliere l'attributo
 }
-@media only screen and (max-width: 600px) {
-  .control{
-    width: 100%;
-  }
+// @media only screen and (max-width: 600px) {
+//   .control{
+//     width: 100%;
+//   }
+// }
 
-}

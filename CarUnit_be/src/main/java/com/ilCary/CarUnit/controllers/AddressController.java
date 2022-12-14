@@ -17,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/addresses/")
+@CrossOrigin("http://localhost:4200")
 public class AddressController {
 
     private final Logger logger = LoggerFactory.getLogger(AddressController.class);

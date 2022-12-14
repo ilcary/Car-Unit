@@ -32,7 +32,6 @@ public class ModelsScraper implements CommandLineRunner {
     // ("//*[contains(@class, 'nomeclasse')]")
 
 
-    //salvarmi le cordinate del punto e poi dico al driover di fare un click
     final static String url = "https://www.subito.it/annunci-italia/vendita/auto/";
 
 
@@ -82,7 +81,7 @@ public class ModelsScraper implements CommandLineRunner {
 
         driver.findElement(By.xpath("//*[@id=\"/car/brand__option--36\"]")).click();//*[@id="filters-container"]/div/div[6]/div[2]/div/div/ul
         Thread.sleep(2000);
-        String initialPage = driver.findElement(By.xpath("//*[@id=\"filters-container\"]/div/div[6]/div[2]/div/div/ul")).getText().toLowerCase();
+        String initialPage = driver.findElement(By.xpath("//*[@id=\"filters-container\"]/div/div[6]/div[2]/div/div/ul")).getText();//.toLowerCase();
         System.out.println("abarth? "+initialPage);
 //        Scanner scanner = new Scanner(initialPage);
 //        Scanner scanneMarchi = new Scanner(initialPage);

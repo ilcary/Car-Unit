@@ -1,162 +1,445 @@
-<div class="text-900 text-3xl font-bold mb-3 text-center">Cerca qui la nuova auto!</div>
+<p-toast></p-toast>
+
+<div class="text-900 text-3xl font-bold md:m-4 m-2 text-center ">Cerca qui la nuova auto!</div>
+<div class="salva text-center m-3 md:hidden"><button pButton pRipple label="Salva ricerca" icon="pi pi-paperclip" class="ml-1" (click)="showConfirm()" [disabled]="!form.valid"></button></div>
+
+
 <p-accordion (onOpen)="avanzata($event)">
   <p-accordionTab header="Ricerca" [selected]="true">
-    <form [formGroup]="form" class="signup-form" (submit)="submit()">
-      <div class="flex flex-row flex-wrap justify-content-center bg-gray-300 border-round-xl">
+    <form [formGroup]="form" class="signup-form">
+      <div class="grid bg-gray-300 border-round-sm">
 
-        <div class="containerini flex flex-row flex-wrap">
-          <div class="control md:m-3 mx-2 m-1">
-            <input aria-describedby="marca-help" id="marca" placeholder="Marca" type="text" pInputText class="w-full"
-              formControlName="marca">
-          </div>
 
-          <div class="control md:m-3 mx-2 m-1">
-            <input aria-describedby="modello-help" id="modello" type="text" placeholder="Modello" pInputText
-              class="w-full" formControlName="modello">
-          </div>
-
-          <div class="control md:m-3 mx-2 m-1">
-            <input aria-describedby="prezzoA-help" id="prezzoA" type="text" placeholder="Prezzo a" pInputText
-              class="w-full" formControlName="prezzoA">
-          </div>
+        <div class="control col-6 lg:col-4 xl:col-2">
+          <p-dropdown styleClass="w-full" inputId="marca" [options]="marcheSubito" (onChange)="getModelliByMake($event)"
+            placeholder="Marca" [showClear]="true" [virtualScrollItemSize]="30" [virtualScroll]="true"
+            formControlName="marca" [filter]="true" filterBy="marca">
+            <ng-template pTemplate="selectedItem" let-options="options">
+              <div class="marca-item marca-item-value p-inputGroup" *ngIf="form.value.marca">
+                <div>{{form.value.marca}}</div>
+              </div>
+            </ng-template>
+            <ng-template let-marca pTemplate="item">
+              <div class="marca-item">
+                <div>{{marca}}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
         </div>
 
-        <div class="containerini flex flex-row flex-wrap align-items-center">
-          <div class="control md:m-3 mx-2 m-1">
-            <input aria-describedby="annoImmatricolazioneDa-help" id="annoImmatricolazioneDa" placeholder="Anno da"
-              type="text" pInputText class="w-full" formControlName="annoImmatricolazioneDa">
-          </div>
-
-          <div class="control md:m-3 mx-2 m-1">
-            <input aria-describedby="citta-help" id="citta" type="text" pInputText placeholder="Città" class="w-full"
-              formControlName="citta">
-          </div>
-
-          <div class="control md:m-3 mx-2 text-center m-1">
-            <button pButton pRipple label="Vai!" icon="pi pi-user" class="w-13rem" [disabled]="!form.valid"></button>
-          </div>
+        <div class="control col-6 lg:col-4 xl:col-2">
+          <p-dropdown styleClass="w-full" inputId="prezzoA" [options]="fasciaPrezziSubito" placeholder="Prezzo a"
+            [showClear]="true" [virtualScrollItemSize]="30" [virtualScroll]="true" formControlName="prezzoA">
+            <ng-template pTemplate="selectedItem" let-options="options">
+              <div class="prezzoA-item prezzoA-item-value p-inputGroup" *ngIf="form.value.prezzoA">
+                <div>{{form.value.prezzoA}}</div>
+              </div>
+            </ng-template>
+            <ng-template let-prezzoA pTemplate="item">
+              <div class="prezzoA-item">
+                <div>{{prezzoA}}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
         </div>
-        <!-- [disabled]="!form.valid" -->
+
+
+        <div class="control col-6 lg:col-4 xl:col-2">
+          <p-dropdown styleClass="w-full" inputId="modello" [options]="modelliAuto" [disabled]="loadingModels"
+            placeholder="Modello" [showClear]="true" [virtualScrollItemSize]="30" [virtualScroll]="true"
+            formControlName="modello" pTooltip="Attendere il caricamento dei modelli" tooltipPosition="top"
+            tooltipEvent="hover" [tooltipDisabled]="!loadingModels">
+            <ng-template pTemplate="selectedItem" let-options="options">
+              <div class="modello-item modello-item-value p-inputGroup" *ngIf="form.value.modello">
+                <div>{{form.value.modello}}</div>
+              </div>
+            </ng-template>
+            <ng-template let-modello pTemplate="item">
+              <div class="modello-item">
+                <div>{{modello}}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+
+
+        <div class="control col-6 lg:col-4 xl:col-2">
+          <p-dropdown styleClass="w-full" inputId="annoImmatricolazioneDa" [options]="fasciaAnniImmatricolazione"
+            placeholder="Anno da" [showClear]="true" [virtualScrollItemSize]="30" [virtualScroll]="true"
+            formControlName="annoImmatricolazioneDa">
+            <ng-template pTemplate="selectedItem" let-options="options">
+              <div class="annoImmatricolazioneDa-item annoImmatricolazioneDa-item-value p-inputGroup"
+                *ngIf="form.value.annoImmatricolazioneDa">
+                <div>{{form.value.annoImmatricolazioneDa}}</div>
+              </div>
+            </ng-template>
+            <ng-template let-annoImmatricolazioneDa pTemplate="item">
+              <div class="annoImmatricolazioneDa-item">
+                <div>{{annoImmatricolazioneDa}}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+
+        <div class="control col-6 lg:col-4 xl:col-2">
+          <p-dropdown styleClass="w-full" inputId="municipality" [options]="comuni" optionLabel="comune" [filter]="true"
+            filterBy="comune" placeholder="Seleziona un comune" [showClear]="true" [virtualScrollItemSize]="30"
+            [virtualScroll]="true" formControlName="citta">
+            <ng-template pTemplate="selectedItem" let-options="options">
+              <div class="citta-item citta-item-value p-inputGroup" *ngIf="form.value.citta">
+                <div>{{form.value.citta.comune}}</div>
+              </div>
+            </ng-template>
+            <ng-template let-citta pTemplate="item">
+              <div class="citta-item">
+                <div>{{citta.comune}}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+
+        <div class="control col-6 lg:col-4 xl:col-2 text-center">
+          <button pButton pRipple label="Vai!" icon="pi pi-search" (click)="submit()" class="mr-1" [disabled]="!form.valid"></button>
+          <button pButton pRipple label="Salva" icon="pi pi-paperclip" (click)="showConfirm()" class="ml-1 hidden md:inline-flex" [disabled]="!form.valid"></button>
+        </div>
       </div>
+      <!-- [disabled]="!form.valid" -->
+
     </form>
 
   </p-accordionTab>
 
   <p-accordionTab header="Ricerca avanzata">
-    <form [formGroup]="formAvanzato" class="signup-form" (submit)="submit()">
-      <div class="flex flex-row flex-wrap justify-content-center bg-gray-300 border-round-xl">
-<!-- TODO! SISTEMARE I CONTAINERINI DELLA RICERCA AVANZATA -->
-        <div class="containerini flex flex-row flex-wrap">
-          <div class="control md:m-3 mx-2 m-1">
-            <input aria-describedby="marca-help" id="marca" placeholder="Marca" type="text" pInputText class="w-full"
-              formControlName="marca">
-          </div>
-
-          <div class="control md:m-3 mx-2 m-1">
-            <input aria-describedby="modello-help" id="modello" type="text" placeholder="Modello" pInputText
-              class="w-full" formControlName="modello">
-          </div>
-
-          <div class="containerini flex flex-row flex-wrap align-items-center">
+    <form [formGroup]="formAvanzato" class="signup-form" (submit)="submitAvanzata()">
+      <div class="grid bg-gray-300 border-round-xl">
 
 
-            <div class="control md:m-3 mx-2 m-1">
-              <input aria-describedby="citta-help" id="citta" type="text" pInputText placeholder="Città" class="w-full"
-                formControlName="citta">
-            </div>
 
-
-            <div class="control md:m-3 mx-2 m-1">
-              <input aria-describedby="tipoDiVeicolo-help" id="tipoDiVeicolo" type="text" pInputText
-                placeholder="Tipo di veicolo" class="w-full" formControlName="tipoDiVeicolo">
-            </div>
-
-
-            <div class="control md:m-3 mx-2 m-1">
-              <input aria-describedby="inserzionista-help" id="inserzionista" type="text" pInputText
-                placeholder="Inserzionista" class="w-full" formControlName="inserzionista">
-            </div>
-
-            <div class="control md:m-3 mx-2 m-1 flex flex-row">
-              <div>
-                <input aria-describedby="annoImmatricolazioneDa-help" id="annoImmatricolazioneDa" placeholder="Anno da"
-                type="text" pInputText class="w-full" formControlName="annoImmatricolazioneDa">
+        <div class="col-6 lg:col-4 xl:col-2">
+          <p-dropdown styleClass="w-full" inputId="marca" [options]="marcheSubito" (onChange)="getModelliByMake($event)"
+            placeholder="Marca" [showClear]="true" [virtualScrollItemSize]="30" [virtualScroll]="true"
+            formControlName="marca">
+            <ng-template pTemplate="selectedItem" let-options="options">
+              <div class="marca-item marca-item-value p-inputGroup" *ngIf="formAvanzato.value.marca">
+                <div>{{formAvanzato.value.marca}}</div>
               </div>
-              <div>
-                <input aria-describedby="annoImmatricolazioneA-help" id="annoImmatricolazioneA" type="text" pInputText
-                placeholder="Anno a" class="w-full" formControlName="annoImmatricolazioneA">
+            </ng-template>
+            <ng-template let-marca pTemplate="item">
+              <div class="marca-item">
+                <div>{{marca}}</div>
               </div>
-            </div>
-          </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
 
-            <div class="control md:m-3 mx-2 m-1 flex flex-row">
-              <div>
-                <input aria-describedby="prezzoDa-help" id="prezzoDa" type="text" pInputText placeholder="Prezzo da"
-                  class="w-full" formControlName="prezzoDa">
+        <div class="col-6 lg:col-4 xl:col-2">
+          <p-dropdown styleClass="w-full" inputId="municipality" [options]="comuni" optionLabel="comune" [filter]="true"
+          filterBy="comune" placeholder="Seleziona un comune" [showClear]="true" [virtualScrollItemSize]="30"
+            [virtualScroll]="true" formControlName="citta">
+            <ng-template pTemplate="selectedItem" let-options="options">
+              <div class="citta-item citta-item-value p-inputGroup" *ngIf="formAvanzato.value.citta">
+                <div>{{formAvanzato.value.citta.comune}}</div>
               </div>
-              <div>
-                <input aria-describedby="prezzoA-help" id="prezzoA" type="text" placeholder="Prezzo a" pInputText
-                  class="w-full" formControlName="prezzoA">
+            </ng-template>
+            <ng-template let-citta pTemplate="item">
+              <div class="citta-item">
+                <div>{{citta.comune}}</div>
               </div>
-            </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+
+        <div class="col-6 lg:col-4 xl:col-2">
+          <p-dropdown styleClass="w-full" inputId="modello" [options]="modelliAuto" [disabled]="loadingModels"
+            placeholder="Modello" [showClear]="true" [virtualScrollItemSize]="30" [virtualScroll]="true"
+            formControlName="modello" pTooltip="Attendere il caricamento dei modelli" tooltipPosition="top"
+            tooltipEvent="hover" [tooltipDisabled]="!loadingModels">
+            <ng-template pTemplate="selectedItem" let-options="options">
+              <div class="modello-item modello-item-value p-inputGroup" *ngIf="formAvanzato.value.modello">
+                <div>{{formAvanzato.value.modello}}</div>
+              </div>
+            </ng-template>
+            <ng-template let-modello pTemplate="item">
+              <div class="modello-item">
+                <div>{{modello}}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+
+        <div class="col-6 lg:col-4 xl:col-2">
+          <p-dropdown styleClass="w-full" inputId="tipoAnnuncio" [options]="tipologiaAnnuncio" placeholder="Venditore"
+            [showClear]="true" [virtualScrollItemSize]="30" [virtualScroll]="true" formControlName="tipoAnnuncio">
+            <ng-template pTemplate="selectedItem" let-options="options">
+              <div class="tipoAnnuncio-item tipoAnnuncio-item-value p-inputGroup"
+                *ngIf="formAvanzato.value.tipoAnnuncio">
+                <div>{{formAvanzato.value.tipoAnnuncio}}</div>
+              </div>
+            </ng-template>
+            <ng-template let-tipoAnnuncio pTemplate="item">
+              <div class="prezzoA-item">
+                <div>{{tipoAnnuncio}}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+
+
+        <div class="control flex flex-row col-12 lg:col-4 xl:col-2">
+          <div class="w-full">
+            <p-dropdown styleClass="w-full" inputId="annoImmatricolazioneDa" [options]="fasciaAnniImmatricolazione"
+              placeholder="Anno da" [showClear]="true" [virtualScrollItemSize]="30" [virtualScroll]="true"
+              formControlName="annoImmatricolazioneDa">
+              <ng-template pTemplate="selectedItem" let-options="options">
+                <div class="annoImmatricolazioneDa-item annoImmatricolazioneDa-item-value p-inputGroup"
+                  *ngIf="form.value.annoImmatricolazioneDa">
+                  <div>{{form.value.annoImmatricolazioneDa}}</div>
+                </div>
+              </ng-template>
+              <ng-template let-annoImmatricolazioneDa pTemplate="item">
+                <div class="annoImmatricolazioneDa-item">
+                  <div>{{annoImmatricolazioneDa}}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
           </div>
-
-
-          <div class="control md:m-3 mx-2 m-1 flex flex-row">
-            <div>
-              <input aria-describedby="kmDa-help" id="kmDa" type="text" pInputText placeholder="Km da" class="w-full"
-                formControlName="kmDa">
-            </div>
-            <div>
-              <input aria-describedby="kmA-help" id="kmA" type="text" pInputText placeholder="Km a" class="w-full"
-                formControlName="kmA">
-            </div>
-          </div>
-
-
-          <div class="control md:m-3 mx-2 m-1">
-            <input aria-describedby="tipologiaAuto-help" id="tipologiaAuto" type="text" pInputText
-              placeholder="Tipologia auto" class="w-full" formControlName="tipologiaAuto">
-          </div>
-
-
-          <div class="control md:m-3 mx-2 m-1">
-            <input aria-describedby="carburante-help" id="carburante" type="text" pInputText placeholder="Carburante"
-              class="w-full" formControlName="carburante">
-          </div>
-
-
-          <div class="control md:m-3 mx-2 m-1">
-            <input aria-describedby="cambio-help" id="cambio" type="text" pInputText placeholder="Cambio" class="w-full"
-              formControlName="cambio">
-          </div>
-
-
-          <div class="control md:m-3 mx-2 m-1">
-            <input aria-describedby="porte-help" id="porte" type="text" pInputText placeholder="Porte" class="w-full"
-              formControlName="porte">
-          </div>
-
-
-          <div class="control md:m-3 mx-2 m-1">
-            <input aria-describedby="colore-help" id="colore" type="text" pInputText placeholder="Colore" class="w-full"
-              formControlName="colore">
-          </div>
-
-
-          <div class="control md:m-3 mx-2 m-1">
-            <input aria-describedby="classeDiEmissone-help" id="classeDiEmissone" type="text" pInputText
-              placeholder="Classe di emissione" class="w-full" formControlName="classeDiEmissone">
-          </div>
-
-          <div class="control md:m-3 mx-2 text-center m-1">
-            <button pButton pRipple label="Vai!" icon="pi pi-user" class="w-13rem"
-              [disabled]="!formAvanzato.valid"></button>
+          <div class="w-full">
+            <p-dropdown styleClass="w-full" inputId="annoImmatricolazioneA" [options]="fasciaAnniImmatricolazione"
+              placeholder="Anno a" [showClear]="true" [virtualScrollItemSize]="30" [virtualScroll]="true"
+              formControlName="annoImmatricolazioneA">
+              <ng-template pTemplate="selectedItem" let-options="options">
+                <div class="annoImmatricolazioneA-item annoImmatricolazioneA-item-value p-inputGroup"
+                  *ngIf="formAvanzato.value.annoImmatricolazioneA">
+                  <div>{{formAvanzato.value.annoImmatricolazioneA}}</div>
+                </div>
+              </ng-template>
+              <ng-template let-annoImmatricolazioneA pTemplate="item">
+                <div class="annoImmatricolazioneA-item">
+                  <div>{{annoImmatricolazioneA}}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
           </div>
         </div>
-        <!-- [disabled]="!form.valid" -->
+
+
+        <div class="control flex flex-row col-12 lg:col-4 xl:col-2">
+          <div class="w-full">
+            <p-dropdown styleClass="w-full" inputId="prezzoDa" [options]="fasciaPrezziSubito" placeholder="Prezzo da"
+              [showClear]="true" [virtualScrollItemSize]="30" [virtualScroll]="true" formControlName="prezzoDa">
+              <ng-template pTemplate="selectedItem" let-options="options">
+                <div class="prezzoDa-item prezzoDa-item-value p-inputGroup" *ngIf="formAvanzato.value.prezzoDa">
+                  <div>{{formAvanzato.value.prezzoDa}}</div>
+                </div>
+              </ng-template>
+              <ng-template let-prezzoDa pTemplate="item">
+                <div class="prezzoDa-item">
+                  <div>{{prezzoDa}}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </div>
+          <div class="w-full">
+            <p-dropdown styleClass="w-full" inputId="prezzoA" [options]="fasciaPrezziSubito" placeholder="Prezzo a"
+              [showClear]="true" [virtualScrollItemSize]="30" [virtualScroll]="true" formControlName="prezzoA">
+              <ng-template pTemplate="selectedItem" let-options="options">
+                <div class="prezzoA-item prezzoA-item-value p-inputGroup" *ngIf="formAvanzato.value.prezzoA">
+                  <div>{{formAvanzato.value.prezzoA}}</div>
+                </div>
+              </ng-template>
+              <ng-template let-prezzoA pTemplate="item">
+                <div class="prezzoA-item">
+                  <div>{{prezzoA}}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </div>
+        </div>
+
+
+        <div class="control flex flex-row col-12 lg:col-4 xl:col-2">
+          <div class="w-full">
+            <p-dropdown styleClass="w-full" inputId="kmDa" [options]="fasciaKmDaSubito" placeholder="Km da"
+              [showClear]="true" [virtualScrollItemSize]="30" [virtualScroll]="true" formControlName="kmDa">
+              <ng-template pTemplate="selectedItem" let-options="options">
+                <div class="kmDa-item kmDa-item-value p-inputGroup" *ngIf="formAvanzato.value.kmDa">
+                  <div>{{formAvanzato.value.kmDa}}</div>
+                </div>
+              </ng-template>
+              <ng-template let-kmDa pTemplate="item">
+                <div class="kmDa-item">
+                  <div>{{kmDa}}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </div>
+          <div class="w-full">
+            <p-dropdown styleClass="w-full" inputId="kmA" [options]="fasciaKmASubito" placeholder="Km a"
+              [showClear]="true" [virtualScrollItemSize]="30" [virtualScroll]="true" formControlName="kmA">
+              <ng-template pTemplate="selectedItem" let-options="options">
+                <div class="kmA-item kmA-item-value p-inputGroup" *ngIf="formAvanzato.value.kmA">
+                  <div>{{formAvanzato.value.kmA}}</div>
+                </div>
+              </ng-template>
+              <ng-template let-kmA pTemplate="item">
+                <div class="kmA-item">
+                  <div>{{kmA}}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </div>
+        </div>
+
+        <div class="col-6 lg:col-4 xl:col-2">
+          <p-dropdown styleClass="w-full" inputId="tipologiaAuto" [options]="tipologiaAuto" placeholder="Tipologia auto"
+            [showClear]="true" [virtualScrollItemSize]="30" [virtualScroll]="true" formControlName="tipologiaAuto">
+            <ng-template pTemplate="selectedItem" let-options="options">
+              <div class="tipologiaAuto-item tipologiaAuto-item-value p-inputGroup"
+                *ngIf="formAvanzato.value.tipologiaAuto">
+                <div>{{formAvanzato.value.tipologiaAuto}}</div>
+              </div>
+            </ng-template>
+            <ng-template let-tipologiaAuto pTemplate="item">
+              <div class="tipologiaAuto-item">
+                <div>{{tipologiaAuto}}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+
+
+        <div class="col-6 lg:col-4 xl:col-2">
+          <p-dropdown styleClass="w-full" inputId="carburante" [options]="tipologiaCarburante"
+            placeholder="Alimentazione" [showClear]="true" [virtualScrollItemSize]="30" [virtualScroll]="true"
+            formControlName="carburante">
+            <ng-template pTemplate="selectedItem" let-options="options">
+              <div class="carburante-item carburante-item-value p-inputGroup" *ngIf="formAvanzato.value.carburante">
+                <div>{{formAvanzato.value.carburante}}</div>
+              </div>
+            </ng-template>
+            <ng-template let-carburante pTemplate="item">
+              <div class="carburante-item">
+                <div>{{carburante}}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+
+
+        <div class="col-6 lg:col-4 xl:col-2">
+          <p-dropdown styleClass="w-full" inputId="cambio" [options]="tipoCambio" placeholder="Cambio"
+            [showClear]="true" [virtualScrollItemSize]="30" [virtualScroll]="true" formControlName="cambio">
+            <ng-template pTemplate="selectedItem" let-options="options">
+              <div class="carburante-item carburante-item-value p-inputGroup" *ngIf="formAvanzato.value.cambio">
+                <div>{{formAvanzato.value.carburante}}</div>
+              </div>
+            </ng-template>
+            <ng-template let-carburante pTemplate="item">
+              <div class="cambio-item">
+                <div>{{carburante}}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+
+
+        <div class="col-6 lg:col-4 xl:col-2">
+          <p-dropdown styleClass="w-full" inputId="porte" [options]="numPorte" placeholder="Porte" [showClear]="true"
+            [virtualScrollItemSize]="30" [virtualScroll]="true" formControlName="porte">
+            <ng-template pTemplate="selectedItem" let-options="options">
+              <div class="porte-item porte-item-value p-inputGroup" *ngIf="formAvanzato.value.porte">
+                <div>{{formAvanzato.value.porte}}</div>
+              </div>
+            </ng-template>
+            <ng-template let-porte pTemplate="item">
+              <div class="porte-item">
+                <div>{{porte}}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+
+
+        <div class="col-6 lg:col-4 xl:col-2">
+          <p-dropdown styleClass="w-full" inputId="colore" [options]="tipologiaColore" placeholder="Colore"
+            [showClear]="true" [virtualScrollItemSize]="30" [virtualScroll]="true" formControlName="colore">
+            <ng-template pTemplate="selectedItem" let-options="options">
+              <div class="colore-item colore-item-value p-inputGroup" *ngIf="formAvanzato.value.colore">
+                <div>{{formAvanzato.value.colore}}</div>
+              </div>
+            </ng-template>
+            <ng-template let-colore pTemplate="item">
+              <div class="colore-item">
+                <div>{{colore}}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+
+
+        <div class="col-6 lg:col-4 xl:col-2">
+          <p-dropdown styleClass="w-full" inputId="classiDiEmissone" [options]="classiDiEmissone"
+            placeholder="Classe di emissioni" [showClear]="true" [virtualScrollItemSize]="30" [virtualScroll]="true"
+            formControlName="classeDiEmissone">
+            <ng-template pTemplate="selectedItem" let-options="options">
+              <div class="classiDiEmissone-item classiDiEmissone-item-value p-inputGroup"
+                *ngIf="formAvanzato.value.classiDiEmissone">
+                <div>{{formAvanzato.value.classiDiEmissone}}</div>
+              </div>
+            </ng-template>
+            <ng-template let-classiDiEmissone pTemplate="item">
+              <div class="classiDiEmissone-item">
+                <div>{{classiDiEmissone}}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+
+        <div class="control col-6 lg:col-4 text-center">
+          <button pButton pRipple label="Vai!" icon="pi pi-user" class="" (click)="submit()" [disabled]="!formAvanzato.valid"></button>
+          <button pButton pRipple label="Salva" icon="pi pi-paperclip" (click)="showConfirm()" class="ml-1 hidden md:inline-flex" [disabled]="!form.valid"></button>
+        </div>
+      </div>
+      <!-- [disabled]="!form.valid" -->
 
     </form>
   </p-accordionTab>
 
 </p-accordion>
+
+
+<div class="adContainer m-4 grid">
+
+  <div class="col-1"></div>
+  <div class="col-10 flex align-items-center flex-column">
+    <app-car-adv-card (showSuccess)="showSuccess($event)" *ngFor="let adv of annunci" [adv]="adv"></app-car-adv-card>
+  </div>
+  <div class="col-1"></div>
+
+</div>
+
+<p-toast position="bottom-center" key="c" styleClass="opacity-100" (onClose)="onReject()" [baseZIndex]="5000">
+  <ng-template let-message pTemplate="message">
+      <div class="flex flex-column" style="flex: 1">
+
+          <div class="text-center opacity-100">
+              <i class="pi pi-cloud-upload" style="font-size: 3rem"></i>
+              <h4>{{message.summary}}</h4>
+              <p>{{message.detail}}</p>
+              <input type="text" class="mb-3" required id="inputtext" pInputText [(ngModel)]="searchName">
+          </div>
+
+          <div class="grid p-fluid">
+              <div class="col-6">
+                  <button type="button" pButton (click)="onConfirm()" label="Salva" [disabled]="!checkInputNameSearch()" class="p-button-success"></button>
+              </div>
+              <div class="col-6">
+                  <button type="button" pButton (click)="onReject()" label="Annulla" class="p-button-secondary"></button>
+              </div>
+          </div>
+      </div>
+  </ng-template>
+</p-toast>
+
+
+
