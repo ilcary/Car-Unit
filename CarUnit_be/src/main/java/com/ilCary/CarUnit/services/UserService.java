@@ -23,6 +23,10 @@ public class UserService {
         return repository.save(x);
     }
 
+    public User update(User x){
+        return repository.save(x);
+    }
+
     public List<User> getAll() {
         return repository.findAll();
     }

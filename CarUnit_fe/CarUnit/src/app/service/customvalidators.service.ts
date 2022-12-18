@@ -40,20 +40,20 @@ export class CustomvalidatorsService {
 
   usernameValidator = (control: AbstractControl) => {
     let currentUser = this.authService.getLoggedUser()
-    return new Promise<ValidationErrors | null>((resolve) => {
-      this.userService.getAllUsers().subscribe((res) => {
-        if (res.find((user: User) =>
+      return new Promise<ValidationErrors | null>((resolve) => {
+        this.userService.getAllUsers().subscribe((res) => {
+          if (res.find((user: User) =>
 
           (user.username.toUpperCase() == control.value.toUpperCase()) &&
           (user.username.toUpperCase() != currentUser?.username.toUpperCase())
-        )) {
-          resolve({ prohibitedData: true, warning: true })
-        } else {
-          resolve(null)
-        }
+          )) {
+            resolve({ prohibitedData: true, warning: true })
+          } else {
+            resolve(null)
+          }
+        });
       });
-    });
-  };
+    };
 
 
 }

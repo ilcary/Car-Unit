@@ -58,11 +58,13 @@ public class UserController {
     @PutMapping("/{id}")
     public User updateUser(
             @PathVariable("id") Long id,
-            @RequestBody UserDTO dto
+            @RequestBody User updateUser
     ) {
 
         User user = userService.getById(id);
-        User updateUser = userConverter.dtoToEntity(dto);
+
+        System.out.println("QUESTO è LO USER UPDATE /////////// "+updateUser.toString());
+
 
         if (updateUser.getName() != null)
             user.setName(updateUser.getName());
@@ -78,11 +80,12 @@ public class UserController {
             user.setDealership(updateUser.getDealership());
         if (updateUser.getAddress() != null)
             user.setAddress(updateUser.getAddress());
+        if (updateUser.getPassword() != null){
+            user.setPassword(updateUser.getPassword());
+            return userService.save(user);
+        }
 
-
-
-        userService.save(user);
-        return user;
+        return userService.update(user);
     }
 
 }

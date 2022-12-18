@@ -10,5 +10,5 @@ public class DealershipDTO {
     private String name;
     private User ceo;
     private Address address;
-    private List<User> employees;
+
 }

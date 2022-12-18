@@ -23,11 +23,15 @@ public class StarredSearchService {
         return repository.findAll();
     }
 
+    public List<StarredSearch> getAllSearchesByUserId(Long id) {
+        return repository.findByUser_Id(id);
+    }
+
     public StarredSearch getById(Long id) {
 
         Optional<StarredSearch> starredSearch = repository.findById(id);
 
-        if(!starredSearch.isPresent())
+        if(starredSearch.isEmpty())
             throw new NotFoundException("StarredSearch not available");
 
         return starredSearch.get();

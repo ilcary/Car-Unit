@@ -25,7 +25,7 @@ export class HeaderComponent implements OnInit {
     this.items = [
       { label: '<h3>Home</h3>', icon: 'pi pi-fw pi-home', routerLink: 'home',escape: false },
       { label: '<h3>Calendario</h3>', icon: 'pi pi-fw pi-calendar',escape: false, },
-      { label: '<h3>Parco auto</h3>', icon: 'pi pi-fw pi-car', routerLink: 'dealership',escape: false, },
+      { label: '<h3>Concessionario</h3>', icon: 'pi pi-fw pi-car', routerLink: 'dealership',escape: false, },
       { label: '<h3>Annunci</h3>', icon: 'pi pi-fw pi-search-plus', routerLink: 'crawler' ,escape: false,},
       { label: '<h3>Aiuto</h3>', icon: 'pi pi-fw pi-info-circle',escape: false, },
       { label: '<h3>Log-out</h3>', icon: 'pi pi-fw pi-power-off', routerLink: '/',escape: false, command: () => {this.auth.logOut()}},

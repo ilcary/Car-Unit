@@ -29,6 +29,15 @@ import { CarAdvCardComponent } from './component/car-adv-card/car-adv-card.compo
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import { TagModule } from 'primeng/tag';
 import {ToastModule} from 'primeng/toast';
+import {OverlayPanelModule} from 'primeng/overlaypanel';
+import {TableModule} from 'primeng/table';
+import { HoverClassDirective } from './directive/hover-class.directive';
+import {SidebarModule} from 'primeng/sidebar';
+import { FormDealCarComponent } from './component/form-deal-car/form-deal-car.component';
+import {FileUploadModule} from 'primeng/fileupload';
+import {CarouselModule} from 'primeng/carousel';
+import {GalleriaModule} from 'primeng/galleria';
+
 
 
 @NgModule({
@@ -41,7 +50,9 @@ import {ToastModule} from 'primeng/toast';
     CrawlerComponent,
     FooterComponent,
     SignupComponent,
-    CarAdvCardComponent
+    CarAdvCardComponent,
+    HoverClassDirective,
+    FormDealCarComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +74,14 @@ import {ToastModule} from 'primeng/toast';
     DialogModule,
     InputTextareaModule,
     TagModule,
-    ToastModule
+    ToastModule,
+    OverlayPanelModule,
+    TableModule,
+    SidebarModule,
+    FileUploadModule,
+    CarouselModule,
+    GalleriaModule
+
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass:AuthInterceptor,multi:true},

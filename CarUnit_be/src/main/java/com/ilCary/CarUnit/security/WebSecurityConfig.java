@@ -57,11 +57,26 @@ public class WebSecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/api/login","/api/users","/api/CarAdv/search","/api/stateAdv","/api/stateAdv/getStateByid","/api/stateAdv","/api/starredSearches/{username}")
+                .antMatchers(HttpMethod.POST,
+                        "/api/login", "/api/users",
+                        "/api/CarAdv/search", "/api/stateAdv", "/api/stateAdv/getStateByid", "/api/stateAdv",
+                        "/api/starredSearches/{username}",
+                        "/api/dealerships/{userCeo_id}",
+                        "/api/DealCar/addNewDealCar/{id}"
+                )
                 .permitAll()
-                .antMatchers(HttpMethod.GET, "/api/all-users","/api/users","/api/comuni","/api/CarModels/{make}","/api/stateAdv/getStateByid","/api/starredSearches","/api/starredSearches/{id}")
+                .antMatchers(HttpMethod.GET,
+                        "/api/all-users", "/api/users", "/api/users/{id}",
+                        "/api/comuni",
+                        "/api/CarModels/{make}",
+                        "/api/stateAdv/getStateByid",
+                        "/api/starredSearches", "/api/starredSearches/{id}", "/api/starredSearches/getAllByUserId/{id}",
+                        "/api/dealerships/userToDealership/{user_id}/{deal_id}", "/api/dealerships/{id}", "/api/dealerships/byCeoId/{id}","/api/dealerships/Employees/{id}","/api/dealerships/DealershipByEmployeesId/{id}",
+                        "/api/DealCar","/api/DealCar/getAllDealCar/{id}"
+                )
                 .permitAll()
-                .antMatchers(HttpMethod.PUT,"/api/stateAdv/update")
+                .antMatchers(HttpMethod.PUT,
+                        "/api/stateAdv/update", "/api/users/{id}")
                 .permitAll()
                 .anyRequest()
                 .authenticated();

@@ -26,6 +26,7 @@ public class User {
     private long id;
 
     private String name;
+
     private String lastname;
 
     @Column(unique = true, nullable = false)
@@ -37,21 +38,25 @@ public class User {
     @OneToMany(mappedBy="user")
     private List<Task> tasks;
 
-
     @OneToMany(mappedBy="user")
     @JsonManagedReference
     private List<StarredSearch> starredSearch;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "dealership_id")
     private Dealership dealership;
+
+    //@JsonBackReference(value = "popi")
+//    @OneToOne
+//    @JoinColumn(name = "dealership_ceo_id")
+//    private Dealership dealershipCeo;
 
     @ManyToOne(cascade= {
             CascadeType.MERGE,
             CascadeType.PERSIST,
             CascadeType.REFRESH
     })
-    @JsonBackReference
     private Address address;
 
     @Column(nullable = false)
@@ -69,4 +74,21 @@ public class User {
         this.roles.add(r);
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", tasks=" + tasks +
+                ", starredSearch=" + starredSearch +
+                ", dealership=" + dealership +
+                ", address=" + address +
+                ", password='" + password + '\'' +
+                ", active=" + active +
+                ", roles=" + roles +
+                '}';
+    }
 }

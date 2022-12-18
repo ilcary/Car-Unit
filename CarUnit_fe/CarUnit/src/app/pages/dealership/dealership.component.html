@@ -1,1 +1,208 @@
-<p>deel work</p>
+<div *ngIf="!haveDealership" class="imgbox text-center">
+  <h1 class="popi">404</h1>
+  <h2>Non hai nessun concessionario al momento</h2>
+  <img class="img404" src="../../../assets/page not found desktop.png" alt="Image" width="100%">
+</div>
+
+<div class="surface-ground px-4 py-5 md:px-6 lg:px-8">
+  <div class="text-center p-2 pb-4">
+    <h1>{{dealership?.name==undefined ? "--":dealership.name}}</h1>
+  </div>
+
+  <div class="grid">
+    <div class="col-12 md:col-6">
+      <div class="surface-card shadow-2 p-3 border-round">
+        <div class="flex justify-content-between mb-3">
+          <div>
+            <span class="block text-500 font-medium mb-3">Auto aquistate questo mese</span>
+            <div class="text-900 font-medium text-xl">152</div>
+          </div>
+          <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
+            style="width:2.5rem;height:2.5rem">
+            <i class="pi pi-shopping-cart text-blue-500 text-xl"></i>
+          </div>
+        </div>
+        <span class="text-500">per una spesa totale di </span>
+        <span class="text-green-500 font-medium">24 new </span>
+      </div>
+    </div>
+    <div class="col-12 md:col-6">
+      <div class="surface-card shadow-2 p-3 border-round">
+        <div class="flex justify-content-between mb-3">
+          <div>
+            <span class="block text-500 font-medium mb-3">Auto vendute questo mese</span>
+            <div class="text-900 font-medium text-xl">$2.100</div>
+          </div>
+          <div class="flex align-items-center justify-content-center bg-orange-100 border-round"
+            style="width:2.5rem;height:2.5rem">
+            <i class="pi pi-map-marker text-orange-500 text-xl"></i>
+          </div>
+        </div>
+        <span class="text-500">per un profitto totale di </span>
+        <span class="text-green-500 font-medium">%52+ </span>
+      </div>
+    </div>
+    <!-- <div class="col-12 md:col-6 lg:col-3">
+          <div class="surface-card shadow-2 p-3 border-round">
+              <div class="flex justify-content-between mb-3">
+                  <div>
+                      <span class="block text-500 font-medium mb-3">Altri dati</span>
+                      <div class="text-900 font-medium text-xl">28441</div>
+                  </div>
+                  <div class="flex align-items-center justify-content-center bg-cyan-100 border-round" style="width:2.5rem;height:2.5rem">
+                      <i class="pi pi-inbox text-cyan-500 text-xl"></i>
+                  </div>
+              </div>
+              <span class="text-green-500 font-medium">520  </span>
+              <span class="text-500">popi</span>
+          </div>
+      </div>
+      <div class="col-12 md:col-6 lg:col-3">
+          <div class="surface-card shadow-2 p-3 border-round">
+              <div class="flex justify-content-between mb-3">
+                  <div>
+                      <span class="block text-500 font-medium mb-3">Altri dati</span>
+                      <div class="text-900 font-medium text-xl">152 Unread</div>
+                  </div>
+                  <div class="flex align-items-center justify-content-center bg-purple-100 border-round" style="width:2.5rem;height:2.5rem">
+                      <i class="pi pi-comment text-purple-500 text-xl"></i>
+                  </div>
+              </div>
+              <span class="text-green-500 font-medium">85 </span>
+              <span class="text-500">popi</span>
+          </div>
+      </div> -->
+  </div>
+</div>
+
+<div class="surface-section px-4 pt-5 md:px-6 lg:px-8 text-center">
+  <div class="mb-3 font-bold text-3xl">
+    <span class="text-900">Console </span>
+    <span class="text-blue-600">CarUnit</span>
+  </div>
+
+  <div class="grid mt-4">
+    <div hover-class="bg-blue-100" (click)="showNewCarDialog()"
+      class="col-12 md:col-4 mb-4 px-5 cursor-pointer border-round-2xl">
+      <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
+        <i class="pi pi-plus-circle text-4xl text-blue-500"></i>
+      </span>
+      <div class="text-900 text-xl mb-3 font-medium">Nuova auto</div>
+      <span class="text-700 line-height-3">Aggiungi un veicolo al parco auto</span>
+    </div>
+
+    <p-dialog header="Nuova auto" [(visible)]="displayNewCar" [draggable]="false" [style]="{height :'90vh',width :'90vw'}">
+
+      <app-form-deal-car [dealership]="dealership" ></app-form-deal-car>
+
+    </p-dialog>
+
+
+    <div hover-class="bg-blue-100" (click)="showSellCarDialog()" class="col-12 md:col-4 mb-4 px-5 cursor-pointer border-round-2xl">
+      <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
+        <i class="pi pi-money-bill text-4xl text-blue-500"></i>
+      </span>
+      <div class="text-900 text-xl mb-3 font-medium">Vendita auto</div>
+      <span class="text-700 line-height-3">Seleziona il veicolo venduto e aggiungi il prezzo di vendita</span>
+    </div>
+
+    <p-dialog header="Vendita auto" [(visible)]="displaySellCar" [draggable]="false" [style]="{height :'90vh',width :'90vw'}">
+
+
+
+    </p-dialog>
+
+
+    <div hover-class="bg-blue-100" (click)="showNewTaskDialog()" *ngIf="isCeo" class="col-12 md:col-4 mb-4 px-5 cursor-pointer border-round-2xl">
+      <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
+        <i class="pi pi-list text-4xl text-blue-500"></i>
+      </span>
+      <div class="text-900 text-xl mb-3 font-medium">Crea task <span class="text-yellow-500 font-medium">CEO</span>
+      </div>
+      <span class="text-700 line-height-3">Crea un incarico specifico per un dipendente</span>
+    </div>
+
+    <p-dialog header="Crea task" [(visible)]="displayNewTask" [draggable]="false" [style]="{height :'90vh',width :'90vw'}">
+
+
+
+    </p-dialog>
+
+
+    <div hover-class="bg-blue-100" (click)="showEditTaskDialog()" *ngIf="!isCeo" class="col-12 md:col-4 mb-4 px-5 cursor-pointer border-round-2xl">
+      <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
+        <i class="pi pi-list text-4xl text-blue-500"></i>
+      </span>
+      <div class="text-900 text-xl mb-3 font-medium">Gestisci task</div>
+      <span class="text-700 line-height-3">Gestisci lo stato dell'incarico attuale</span>
+    </div>
+
+    <p-dialog header="Gestisci task" [(visible)]="displayEditTask" [draggable]="false" [style]="{height :'90vh',width :'90vw'}">
+
+
+
+    </p-dialog>
+
+
+    <div hover-class="bg-blue-100" (click)="showAdEmployeeDialog()" *ngIf="isCeo" class="col-12 md:col-4 mb-4 px-5 cursor-pointer border-round-2xl">
+      <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
+        <i class="pi pi-user-plus text-4xl text-blue-500"></i>
+      </span>
+      <div class="text-900 text-xl mb-3 font-medium">Aggiungi dipendente <span
+          class="text-yellow-500 font-medium">CEO</span></div>
+      <span class="text-700 line-height-3">Aggiungi l'utente nella tua lista dipendenti</span>
+    </div>
+
+    <p-dialog header="Aggiungi dipendente" [(visible)]="displayAdEmployee" [draggable]="false" [style]="{height :'90vh',width :'90vw'}">
+
+
+
+    </p-dialog>
+
+
+    <div hover-class="bg-blue-100" (click)="showDeleteEmployeeDialog()" *ngIf="isCeo" class="col-12 md:col-4 mb-4 px-5 cursor-pointer border-round-2xl">
+      <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
+        <i class="pi pi-user-minus text-4xl text-blue-500"></i>
+      </span>
+      <div class="text-900 text-xl mb-3 font-medium">Rimuovi dipendente <span
+          class="text-yellow-500 font-medium">CEO</span></div>
+      <span class="text-700 line-height-3">Elimina l'utente dalla tua lista dipendenti</span>
+    </div>
+
+    <p-dialog header="Rimuovi dipendente" [(visible)]="displayDeleteEmployee" [draggable]="false" [style]="{height :'90vh',width :'90vw'}">
+
+
+
+    </p-dialog>
+
+
+    <div hover-class="bg-blue-100" (click)="showUpdateDealershipDialog()" *ngIf="isCeo" class="col-12 md:col-4 md:mb-4 mb-0 px-3 border-round-2xl">
+      <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
+        <i class="pi pi-file-edit text-4xl text-blue-500"></i>
+      </span>
+      <div class="text-900 text-xl mb-3 font-medium">Modifica concessionario <span
+          class="text-yellow-500 font-medium">CEO</span></div>
+      <span class="text-700 line-height-3">Modifica l'anagrafica e personalizza il tuo concessionario</span>
+    </div>
+
+    <p-dialog header="Modifica concessionario" [(visible)]="displayUpdateDealership" [draggable]="false" [style]="{height :'90vh',width :'90vw'}">
+
+
+
+    </p-dialog>
+
+
+  </div>
+</div>
+
+
+
+
+
+
+<div class="surface-section">
+  <div class="text-center p-2 pb-4">
+    <h1>Auto</h1>
+  </div>
+
+

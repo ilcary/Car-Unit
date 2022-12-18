@@ -1,5 +1,7 @@
 package com.ilCary.CarUnit.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,7 +22,8 @@ public class Dealership {
 
     private String name;
 
-    @OneToOne(cascade = CascadeType.ALL)
+
+    @OneToOne
     @JoinColumn(name = "ceo_id")
     private User ceo;
 
@@ -31,7 +34,25 @@ public class Dealership {
   //  private List<CarLocal> fleet;
 
     @OneToMany(mappedBy="dealership")
+    @JsonManagedReference
     private List<User> employees;
 
+    @JsonManagedReference("fleet")
+    @OneToMany(mappedBy="dealership")
+    private List<DealCar> fleet;
+
+
+    public void addUserToDealership(User u){
+       employees.add(u);
+    }
+
+    public void removeUserFromDealership(User u){
+        if(employees.contains(u)){
+            employees.remove(u);
+        }else{
+            System.out.println("user not contained in employees");
+        }
+
+    }
 
 }

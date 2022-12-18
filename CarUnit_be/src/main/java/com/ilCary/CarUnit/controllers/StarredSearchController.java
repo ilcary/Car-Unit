@@ -55,6 +55,11 @@ public class StarredSearchController {
         return starredSearchService.getAll();
     }
 
+    @GetMapping("/getAllByUserId/{id}")
+    public List<StarredSearch> getStarredSearchListByUserId(@PathVariable("id") Long id) {
+        return starredSearchService.getAllSearchesByUserId(id);
+    }
+
     @GetMapping("/{id}")
     public StarredSearch getStarredSearchById(@PathVariable("id") Long id) {
         return starredSearchService.getById(id);

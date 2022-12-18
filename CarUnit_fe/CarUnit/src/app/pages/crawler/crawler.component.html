@@ -1,11 +1,11 @@
 <p-toast></p-toast>
 
 <div class="text-900 text-3xl font-bold md:m-4 m-2 text-center ">Cerca qui la nuova auto!</div>
-<div class="salva text-center m-3 md:hidden"><button pButton pRipple label="Salva ricerca" icon="pi pi-paperclip" class="ml-1" (click)="showConfirm()" [disabled]="!form.valid"></button></div>
+<div class="salva text-center m-3 md:hidden"><button pButton pRipple label="Salva ricerca" icon="pi pi-paperclip" class="ml-1 p-1" (click)="showConfirm()" [disabled]="!form.valid"></button></div>
 
 
-<p-accordion (onOpen)="avanzata($event)">
-  <p-accordionTab header="Ricerca" [selected]="true">
+<p-accordion id="popi" (onOpen)="avanzata($event)">
+  <p-accordionTab #firstAccord header="Ricerca" [selected]="openSearch">
     <form [formGroup]="form" class="signup-form">
       <div class="grid bg-gray-300 border-round-sm">
 
@@ -109,7 +109,7 @@
 
   </p-accordionTab>
 
-  <p-accordionTab header="Ricerca avanzata">
+  <p-accordionTab [selected]="openAdvacedSearch" header="Ricerca avanzata">
     <form [formGroup]="formAvanzato" class="signup-form" (submit)="submitAvanzata()">
       <div class="grid bg-gray-300 border-round-xl">
 
@@ -330,13 +330,13 @@
           <p-dropdown styleClass="w-full" inputId="cambio" [options]="tipoCambio" placeholder="Cambio"
             [showClear]="true" [virtualScrollItemSize]="30" [virtualScroll]="true" formControlName="cambio">
             <ng-template pTemplate="selectedItem" let-options="options">
-              <div class="carburante-item carburante-item-value p-inputGroup" *ngIf="formAvanzato.value.cambio">
-                <div>{{formAvanzato.value.carburante}}</div>
+              <div class="cambio-item cambio-item-value p-inputGroup" *ngIf="formAvanzato.value.cambio">
+                <div>{{formAvanzato.value.cambio}}</div>
               </div>
             </ng-template>
-            <ng-template let-carburante pTemplate="item">
+            <ng-template let-cambio pTemplate="item">
               <div class="cambio-item">
-                <div>{{carburante}}</div>
+                <div>{{cambio}}</div>
               </div>
             </ng-template>
           </p-dropdown>
@@ -404,11 +404,36 @@
 
     </form>
   </p-accordionTab>
-
 </p-accordion>
 
+<p-toast></p-toast>
 
-<div class="adContainer m-4 grid">
+<div class="text-center">
+  <p-button styleClass="p-1 mt-3" label="Ricerche salvate" icon="pi pi-search" (click)="op.toggle($event)"></p-button>
+</div>
+
+
+<p-overlayPanel #op [showCloseIcon]="true" [style]="{width: '450px'}">
+    <ng-template pTemplate>
+        <p-table [value]="starredSearches" selectionMode="single" [(selection)]="selectedSearch" (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="5" responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="nameSearch">Nome ricerca<p-sortIcon field="nameSearch"></p-sortIcon></th>
+                    <th pSortableColumn="marca">Marchio<p-sortIcon field="marca"></p-sortIcon></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-search>
+                <tr [pSelectableRow]="rowData" (click)="firstAccord.toggle($event)" (click)="selectSearch(search)">
+                    <td>{{search.nameSearch}}</td>
+                    <td>{{search.marca}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </ng-template>
+</p-overlayPanel>
+
+
+<div class="adContainer grid">
 
   <div class="col-1"></div>
   <div class="col-10 flex align-items-center flex-column">

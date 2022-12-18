@@ -1,0 +1,138 @@
+<form [formGroup]="form" class="signup-form">
+  <div class="grid">
+
+    <p-toast></p-toast>
+
+    <div class="control col-6">
+      <p-dropdown styleClass="w-full" inputId="make" [options]="marcheSubito" (onChange)="getModelliByMake($event)"
+        placeholder="Marca" [showClear]="true" [virtualScrollItemSize]="30" [virtualScroll]="true"
+        formControlName="make" [filter]="true" filterBy="make">
+        <ng-template pTemplate="selectedItem" let-options="options">
+          <div class="make-item make-item-value p-inputGroup" *ngIf="form.value.make">
+            <div>{{form.value.make}}</div>
+          </div>
+        </ng-template>
+        <ng-template let-make pTemplate="item">
+          <div class="make-item">
+            <div>{{make}}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+
+    <div class="control col-6">
+      <p-dropdown styleClass="w-full" inputId="model" [options]="modelliAuto" [disabled]="loadingModels"
+        placeholder="Modello" [showClear]="true" [virtualScrollItemSize]="30" [virtualScroll]="true"
+        formControlName="model" pTooltip="Attendere il caricamento dei modelli" tooltipPosition="top"
+        tooltipEvent="hover" [tooltipDisabled]="!loadingModels">
+        <ng-template pTemplate="selectedItem" let-options="options">
+          <div class="model-item model-item-value p-inputGroup" *ngIf="form.value.model">
+            <div>{{form.value.model}}</div>
+          </div>
+        </ng-template>
+        <ng-template let-model pTemplate="item">
+          <div class="model-item">
+            <div>{{model}}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+
+    <div class="control col-6">
+      <span class="p-float-label mt-2">
+        <input id="float-input" type="text" class="w-full" formControlName="priceCop" pInputText>
+        <label for="float-input">Prezzo d'acquisto</label>
+      </span>
+    </div>
+
+    <div class="control col-6 mt-2">
+      <p-dropdown styleClass="w-full" inputId="year" [options]="fasciaAnniImmatricolazione"
+        placeholder="Anno d'immatricolazione" [showClear]="true" [virtualScrollItemSize]="30" [virtualScroll]="true"
+        formControlName="year">
+        <ng-template pTemplate="selectedItem" let-options="options">
+          <div class="year-item year-item-value p-inputGroup" *ngIf="form.value.year">
+            <div>{{form.value.year}}</div>
+          </div>
+        </ng-template>
+        <ng-template let-year pTemplate="item">
+          <div class="year-item">
+            <div>{{year}}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+
+    <div class="control col-6">
+      <span class="p-float-label mt-2">
+        <input id="float-input" type="text" class="w-full" formControlName="km" pInputText>
+        <label for="float-input">Km</label>
+      </span>
+    </div>
+
+    <div class="col-6 mt-2">
+      <p-dropdown styleClass="w-full" inputId="powerSupply" [options]="tipologiaCarburante" placeholder="Alimentazione"
+        [showClear]="true" [virtualScrollItemSize]="30" [virtualScroll]="true" formControlName="powerSupply">
+        <ng-template pTemplate="selectedItem" let-options="options">
+          <div class="powerSupply-item powerSupply-item-value p-inputGroup" *ngIf="form.value.powerSupply">
+            <div>{{form.value.powerSupply}}</div>
+          </div>
+        </ng-template>
+        <ng-template let-powerSupply pTemplate="item">
+          <div class="powerSupply-item">
+            <div>{{powerSupply}}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+
+    <div class="col-6 mt-2">
+      <p-dropdown styleClass="w-full" inputId="gearbox" [options]="tipoCambio" placeholder="Cambio" [showClear]="true"
+        [virtualScrollItemSize]="30" [virtualScroll]="true" formControlName="gearbox">
+        <ng-template pTemplate="selectedItem" let-options="options">
+          <div class="gearbox-item gearbox-item-value p-inputGroup" *ngIf="form.value.gearbox">
+            <div>{{form.value.gearbox}}</div>
+          </div>
+        </ng-template>
+        <ng-template let-gearbox pTemplate="item">
+          <div class="gearbox-item">
+            <div>{{gearbox}}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+
+    <div class="col-6 mt-2">
+      <p-dropdown styleClass="w-full" inputId="emissionClass" [options]="classiDiEmissone"
+        placeholder="Classe di emissioni" [showClear]="true" [virtualScrollItemSize]="30" [virtualScroll]="true"
+        formControlName="emissionClass">
+        <ng-template pTemplate="selectedItem" let-options="options">
+          <div class="emissionClass-item emissionClass-item-value p-inputGroup" *ngIf="form.value.emissionClass">
+            <div>{{form.value.emissionClass}}</div>
+          </div>
+        </ng-template>
+        <ng-template let-emissionClass pTemplate="item">
+          <div class="emissionClass-item">
+            <div>{{emissionClass}}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+
+    <div class="col-6 col-offset-3 text-center">
+      <!-- <input type="file" multiple value="select" #selectFile
+     (change)="onFileSelected($event)"
+     > -->
+      <p-fileUpload #upImg name="demo[]" (onSelect)="onFileSelected($event)" [customUpload]="true" [multiple]="true"
+        accept="image/*" [showUploadButton]="false" chooseStyleClass="p-1" cancelStyleClass="p-1 p-button-danger" >
+      </p-fileUpload>
+
+    </div>
+
+
+    <div class="col-6 col-offset-3 text-center">
+      <button pButton pRipple label="Aggiungi al parco auto" icon="pi pi-plus" (click)="submit()" (click)="upImg.clear()"
+        class="mr-1 p-1 p-button-success" [disabled]="!form.valid"></button>
+    </div>
+
+  </div>
+</form>

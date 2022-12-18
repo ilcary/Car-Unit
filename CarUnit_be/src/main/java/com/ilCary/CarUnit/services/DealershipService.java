@@ -23,6 +23,10 @@ public class DealershipService {
         return repository.findAll();
     }
 
+    public Optional<Dealership> getDealershipByCeoId(Long id){
+        return repository.findByCeo_Id(id);
+    }
+
     public Dealership getById(Long id) {
 
         Optional<Dealership> dealership = repository.findById(id);

@@ -57,9 +57,14 @@ export class CarAdvService {
     return this.http.get<ISearch>(apiUrl + '/starredSearches/' + id);
   }
 
+  getSearchesAdvByUserId(id:string):Observable<ISearch[]>{
+    return this.http.get<ISearch[]>(apiUrl + "/starredSearches/getAllByUserId/"+id);
+  }
+
   deleteSearchAdvById(id:string):Observable<ISearch>{
     return this.http.delete<ISearch>(apiUrl + '/starredSearches/' + id);
   }
+
 
 
 }

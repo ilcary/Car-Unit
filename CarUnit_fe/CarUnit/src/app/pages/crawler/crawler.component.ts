@@ -23,8 +23,10 @@ type esito = {
 })
 export class CrawlerComponent implements OnInit {
 
-
   loadingModels!: boolean;
+
+  openAdvacedSearch: boolean = false;
+  openSearch: boolean = true;
 
   username_: string = String(this.auth.getLoggedUser()?.username)
 
@@ -62,6 +64,11 @@ export class CrawlerComponent implements OnInit {
 
   comuni: Comune[] = [];
   countries: string[] = [];
+
+  starredSearches: ISearch[]= [];
+
+  selectedSearch!: ISearch;
+
 
   annunci: ICarAdv[] = [
     {
@@ -149,6 +156,11 @@ export class CrawlerComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.modelServ.getSearchesAdvByUserId(String(this.auth.getLoggedUser()?.id))
+    .subscribe((res) => {
+      this.starredSearches = res;
+    })
 
     console.log("popoipipi");
 
@@ -299,13 +311,15 @@ export class CrawlerComponent implements OnInit {
 
   onConfirm() {
 
+
+
     let searchForm: ISearch = {
       nameSearch: this.searchName,
-      marca: this.form.value.marca,
-      modello: this.form.value.modello,
-      prezzoA: this.form.value.prezzoA,
-      annoImmatricolazioneDa: this.form.value.annoImmatricolazioneDa,
-      citta: this.form.value.citta,
+      marca: this.form.value.marca ? this.formAvanzato.value.marca : this.form.value.marca ,
+      modello: this.form.value.modello ? this.formAvanzato.value.modello : this.form.value.modello ,
+      prezzoA: this.form.value.prezzoA ? this.formAvanzato.value.prezzoA : this.form.value.prezzoA ,
+      annoImmatricolazioneDa: this.form.value.annoImmatricolazioneDa ? this.formAvanzato.value.annoImmatricolazioneDa : this.form.value.annoImmatricolazioneDa ,
+      citta: this.form.value.citta ? this.formAvanzato.value.citta : this.form.value.citta ,
       inserzionista: this.formAvanzato.value.tipoAnnuncio,
       annoImmatricolazioneA: this.formAvanzato.value.annoImmatricolazioneA,
       prezzoDa: this.formAvanzato.value.prezzoDa,
@@ -325,14 +339,12 @@ export class CrawlerComponent implements OnInit {
       .subscribe(data => {
         console.log(data);
         this.showNot("Perfetto", "Ricerca salvata con successo");
-
       })
 
     this.messageService.clear('c');
   }
 
   onReject() {
-
     this.messageService.clear('c');
   }
 
@@ -342,5 +354,38 @@ export class CrawlerComponent implements OnInit {
     }
     return false;
   }
+
+
+   onRowSelect(e: Event) {
+        this.messageService.add({severity: 'info', summary: 'Product Selected'});
+    }
+
+    selectSearch(search:ISearch){
+
+      console.log(search);
+
+      this.openSearch=false;
+      this.openAdvacedSearch= true;
+
+      this.formAvanzato.get('marca')?.setValue(search.marca);
+      this.formAvanzato.get('modello')?.setValue(search.modello);
+      this.formAvanzato.get('prezzoA')?.setValue(search.prezzoA);
+      this.formAvanzato.get('annoImmatricolazioneDa')?.setValue(search.annoImmatricolazioneDa);
+      this.formAvanzato.get('citta')?.setValue(search.citta);
+      this.formAvanzato.get('tipoAnnuncio')?.setValue(search.inserzionista);
+      this.formAvanzato.get('annoImmatricolazioneA')?.setValue(search.annoImmatricolazioneA);
+      this.formAvanzato.get('prezzoDa')?.setValue(search.prezzoDa);
+      this.formAvanzato.get('kmDa')?.setValue(search.kmDa);
+      this.formAvanzato.get('kmA')?.setValue(search.kmA);
+      this.formAvanzato.get('tipologiaAuto')?.setValue(search.tipologiaAuto);
+      this.formAvanzato.get('carburante')?.setValue(search.carburante);
+      this.formAvanzato.get('cambio')?.setValue(search.cambio);
+      this.formAvanzato.get('porte')?.setValue(search.porte);
+      this.formAvanzato.get('colore')?.setValue(search.colore);
+      this.formAvanzato.get('classeDiEmissone')?.setValue(search.classeDiEmissone);
+
+
+
+    }
 
 }

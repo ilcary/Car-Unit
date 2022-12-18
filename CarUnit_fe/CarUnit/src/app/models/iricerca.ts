@@ -1,4 +1,5 @@
 export interface ISearch{
+  id?:number;
   nameSearch?:string;
   citta?: string;
   tipoDiVeicolo?:string;//nuovo, usato o km0

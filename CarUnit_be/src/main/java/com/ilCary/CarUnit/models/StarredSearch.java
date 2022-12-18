@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Builder
-@Data
 @Entity
+@Data
 @Table(name = "starred_search")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,32 +19,6 @@ public class StarredSearch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Override
-    public String toString() {
-        return "StarredSearch{" +
-                "id=" + id +
-                ", user=" + user +
-                ", nameSearch='" + nameSearch + '\'' +
-                ", citta='" + citta + '\'' +
-                ", tipoDiVeicolo='" + tipoDiVeicolo + '\'' +
-                ", inserzionista='" + inserzionista + '\'' +
-                ", marca='" + marca + '\'' +
-                ", modello='" + modello + '\'' +
-                ", annoImmatricolazioneDa='" + annoImmatricolazioneDa + '\'' +
-                ", annoImmatricolazioneA='" + annoImmatricolazioneA + '\'' +
-                ", prezzoDa='" + prezzoDa + '\'' +
-                ", prezzoA='" + prezzoA + '\'' +
-                ", kmDa='" + kmDa + '\'' +
-                ", kmA='" + kmA + '\'' +
-                ", tipologiaAuto='" + tipologiaAuto + '\'' +
-                ", carburante='" + carburante + '\'' +
-                ", cambio='" + cambio + '\'' +
-                ", porte='" + porte + '\'' +
-                ", colore='" + colore + '\'' +
-                ", classeDiEmissone='" + classeDiEmissone + '\'' +
-                '}';
-    }
 
     @JsonBackReference
     @ManyToOne
@@ -73,4 +47,29 @@ public class StarredSearch {
     private String colore;
     private String classeDiEmissone;
 
+    @Override
+    public String toString() {
+        return "StarredSearch{" +
+                "id=" + id +
+                ", user=" + user +
+                ", nameSearch='" + nameSearch + '\'' +
+                ", citta='" + citta + '\'' +
+                ", tipoDiVeicolo='" + tipoDiVeicolo + '\'' +
+                ", inserzionista='" + inserzionista + '\'' +
+                ", marca='" + marca + '\'' +
+                ", modello='" + modello + '\'' +
+                ", annoImmatricolazioneDa='" + annoImmatricolazioneDa + '\'' +
+                ", annoImmatricolazioneA='" + annoImmatricolazioneA + '\'' +
+                ", prezzoDa='" + prezzoDa + '\'' +
+                ", prezzoA='" + prezzoA + '\'' +
+                ", kmDa='" + kmDa + '\'' +
+                ", kmA='" + kmA + '\'' +
+                ", tipologiaAuto='" + tipologiaAuto + '\'' +
+                ", carburante='" + carburante + '\'' +
+                ", cambio='" + cambio + '\'' +
+                ", porte='" + porte + '\'' +
+                ", colore='" + colore + '\'' +
+                ", classeDiEmissone='" + classeDiEmissone + '\'' +
+                '}';
+    }
 }
