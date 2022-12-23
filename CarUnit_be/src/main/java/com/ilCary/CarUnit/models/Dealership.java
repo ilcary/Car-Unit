@@ -55,4 +55,15 @@ public class Dealership {
 
     }
 
+    @Override
+    public String toString() {
+        return "Dealership{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", ceo=" + ceo +
+                ", address=" + address +
+                ", employees=" + employees +
+                ", fleet=" + fleet +
+                '}';
+    }
 }

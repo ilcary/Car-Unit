@@ -15,4 +15,5 @@ export class Dealership {
     this.ceo = ceo;
     this.name = name;
   }
+
 }

@@ -1,6 +1,7 @@
 import { Address } from "./Address";
 import { Dealership } from "./Dealership";
 import { ILogin } from "./ilogin";
+import { ITask } from "./iTask";
 
 export class User implements ILogin {
   id!:number | undefined;
@@ -11,6 +12,8 @@ export class User implements ILogin {
   password: string;
   address: Address;
   _dealership!:Dealership;
+  ceo!:boolean;
+  tasks!:ITask[];
 
 
   constructor(name: string,username: string, lastname: string, email: string, password: string,address: Address){

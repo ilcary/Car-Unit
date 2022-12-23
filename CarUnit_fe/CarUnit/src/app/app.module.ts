@@ -37,6 +37,11 @@ import { FormDealCarComponent } from './component/form-deal-car/form-deal-car.co
 import {FileUploadModule} from 'primeng/fileupload';
 import {CarouselModule} from 'primeng/carousel';
 import {GalleriaModule} from 'primeng/galleria';
+import { DealershipCarCardComponent } from './component/dealership-car-card/dealership-car-card.component';
+import {CalendarModule} from 'primeng/calendar';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import { DealershipFormComponent } from './component/dealership-form/dealership-form.component';
+import { MiscComponent } from './pages/misc/misc.component';
 
 
 
@@ -52,7 +57,10 @@ import {GalleriaModule} from 'primeng/galleria';
     SignupComponent,
     CarAdvCardComponent,
     HoverClassDirective,
-    FormDealCarComponent
+    FormDealCarComponent,
+    DealershipCarCardComponent,
+    DealershipFormComponent,
+    MiscComponent
   ],
   imports: [
     BrowserModule,
@@ -80,7 +88,9 @@ import {GalleriaModule} from 'primeng/galleria';
     SidebarModule,
     FileUploadModule,
     CarouselModule,
-    GalleriaModule
+    GalleriaModule,
+    CalendarModule,
+    ConfirmDialogModule
 
   ],
   providers: [

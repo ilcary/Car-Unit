@@ -6,7 +6,7 @@
     <div class="control col-6">
       <p-dropdown styleClass="w-full" inputId="make" [options]="marcheSubito" (onChange)="getModelliByMake($event)"
         placeholder="Marca" [showClear]="true" [virtualScrollItemSize]="30" [virtualScroll]="true"
-        formControlName="make" [filter]="true" filterBy="make">
+        formControlName="make"  >
         <ng-template pTemplate="selectedItem" let-options="options">
           <div class="make-item make-item-value p-inputGroup" *ngIf="form.value.make">
             <div>{{form.value.make}}</div>
@@ -122,7 +122,7 @@
       <!-- <input type="file" multiple value="select" #selectFile
      (change)="onFileSelected($event)"
      > -->
-      <p-fileUpload #upImg name="demo[]" (onSelect)="onFileSelected($event)" [customUpload]="true" [multiple]="true"
+      <p-fileUpload #upImg name="demo[]" (onSelect)="onFileSelected_($event)" [customUpload]="true" [multiple]="true"
         accept="image/*" [showUploadButton]="false" chooseStyleClass="p-1" cancelStyleClass="p-1 p-button-danger" >
       </p-fileUpload>
 

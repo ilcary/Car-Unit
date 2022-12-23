@@ -22,6 +22,10 @@ public class TaskService {
         return repository.findAll();
     }
 
+    public List<Task> findByUser_Id(Long id) {
+        return repository.findByUser_Id(id);
+    }
+
     public Task getById(Long id) {
 
         Optional<Task> task = repository.findById(id);

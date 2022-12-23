@@ -1,6 +1,7 @@
 import { Comune } from "./Comune";
 
 export class Address {
+  id?: number;
   street: string;
   streetNum: string;
   municipality: Comune;

@@ -14,6 +14,6 @@ export interface IDealCar{
      gearbox?:string;
      emissionClass?:string;
      link?:string;
-     photos:FileHandle[];
+     productImages:FileHandle[];
      dealership?:Dealership;
 }

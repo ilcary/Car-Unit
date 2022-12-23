@@ -1,0 +1,23 @@
+<div class="card">
+  <h2>Prezzi carburante in Europa</h2>
+  <p-table [value]="gasPrices" [tableStyle]="{'min-width': '60rem'}">
+      <ng-template pTemplate="header">
+          <tr>
+              <th pSortableColumn="name" style="width:20%">Name <p-sortIcon field="name"></p-sortIcon></th>
+              <th pSortableColumn="regular" style="width:20%">regular <p-sortIcon field="regular"></p-sortIcon></th>
+              <th pSortableColumn="midGrade" style="width:20%">midGrade <p-sortIcon field="midGrade"></p-sortIcon></th>
+              <th pSortableColumn="premium" style="width:20%">premium <p-sortIcon field="premium"></p-sortIcon></th>
+              <th pSortableColumn="diesel" style="width:20%">diesel <p-sortIcon field="diesel"></p-sortIcon></th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-gasPrice>
+          <tr>
+              <td>{{gasPrice.country}}</td>
+              <td>{{gasPrice.currency}}</td>
+              <td>{{gasPrice.diesel}}</td>
+              <td>{{gasPrice.gasoline}}</td>
+              <td>{{gasPrice.lpg}}</td>
+          </tr>
+      </ng-template>
+  </p-table>
+</div>

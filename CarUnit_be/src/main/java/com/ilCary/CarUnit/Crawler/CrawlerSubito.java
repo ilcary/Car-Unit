@@ -336,10 +336,10 @@ public class CrawlerSubito implements CommandLineRunner {
         do {
             Thread.sleep(500);
             numPagine++;
-            System.out.println("----------//////-----------Questa è la pagina numero: "+ numPagine);
-            String adsText = driver.findElement(By.xpath("//*[@id=\"layout\"]/main/div[3]/div[2]/div[2]/div[1]/div[3]/div")).getText();
+           // System.out.println("----------//////-----------Questa è la pagina numero: "+ numPagine);
+          //  String adsText = driver.findElement(By.xpath("//*[@id=\"layout\"]/main/div[3]/div[2]/div[2]/div[1]/div[3]/div")).getText();
             List<WebElement> ads = driver.findElements(By.className("BigCard-module_card__Exzqv"));
-            System.out.println(adsText);
+          //  System.out.println(adsText);
             System.out.println(ads);
             adsSize = ads.size();
 

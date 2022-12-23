@@ -8,7 +8,7 @@ import { CarAdvService } from 'src/app/service/car-adv.service';
 import { MessageService } from 'primeng/api';
 import { HttpErrorResponse } from '@angular/common/http';
 
-type esito = {
+export type esito = {
   esito: boolean,
   title: string,
   description: string

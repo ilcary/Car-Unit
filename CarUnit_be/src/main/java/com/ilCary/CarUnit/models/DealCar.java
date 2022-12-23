@@ -47,4 +47,22 @@ public class DealCar {
     @JoinColumn(name = "dealership_id")
     private Dealership dealership;
 
+    @Override
+    public String toString() {
+        return "DealCar{" +
+                "id=" + id +
+                ", make='" + make + '\'' +
+                ", model='" + model + '\'' +
+                ", priceCop='" + priceCop + '\'' +
+                ", priceSell='" + priceSell + '\'' +
+                ", year='" + year + '\'' +
+                ", km='" + km + '\'' +
+                ", powerSupply='" + powerSupply + '\'' +
+                ", gearbox='" + gearbox + '\'' +
+                ", emissionClass='" + emissionClass + '\'' +
+                ", link='" + link + '\'' +
+                ", productImages=" + productImages +
+                ", dealership=" + dealership +
+                '}';
+    }
 }

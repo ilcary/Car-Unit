@@ -1,0 +1,101 @@
+<!-- <div id="container" class="grid flex align-items-center">
+
+  <div class="product-details col-6">
+
+    <h1>{{adv.make}} {{adv.model}}</h1>
+    <span class="hint-star star">
+      <i class="fa fa-star" aria-hidden="true"></i>
+      <i class="fa fa-star" aria-hidden="true"></i>
+      <i class="fa fa-star" aria-hidden="true"></i>
+      <i class="fa fa-star" aria-hidden="true"></i>
+      <i class="fa fa-star-o" aria-hidden="true"></i>
+    </span>
+
+
+    <div class="grid">
+      <div class="col-4">
+        <p id="line">Acquisto: {{adv.priceCop}}</p>
+        <p>Vendita: {{adv.priceSell}}</p>
+      </div>
+      <div class="col-4">
+        <p>{{adv.powerSupply}}</p>
+        <p>{{adv.year}}</p>
+        <p>{{adv.gearbox}}</p>
+      </div>
+      <div class="col-4">
+        <p>{{adv.km}}</p>
+        <p>{{adv.emissionClass}}</p>
+      </div>
+    </div>
+
+    <div class="control">
+
+
+
+    </div>
+
+  </div>
+
+  <div class="product-image col-6">
+
+    <p-carousel [value]="adv.productImages" styleClass="custom-carousel" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="3000" [responsiveOptions]="responsiveOptions">
+
+      <ng-template let-product pTemplate="item">
+          <div class="product-item">
+              <div class="product-item-content">
+                  <div class="mb-3">
+                      <img [src]="product.url" [alt]="product.file.name" class="product-image" />
+                  </div>
+              </div>
+          </div>
+      </ng-template>
+  </p-carousel>
+
+
+  </div>
+
+</div> -->
+
+
+
+  <div class="courses-container my-3">
+    <div class="course">
+
+      <div class="course-preview">
+        <p-carousel [value]="adv.productImages" styleClass="custom-carousel mt-4" [numVisible]="1" [numScroll]="1"
+          [circular]="true" [autoplayInterval]="3000" [responsiveOptions]="responsiveOptions">
+          <ng-template let-product pTemplate="item">
+            <div class="product-item">
+              <div class="product-item-content">
+                <div class="mb-3">
+                  <img [src]="product.url" [alt]="product.file.name" class="product-image" />
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </p-carousel>
+      </div>
+
+      <div class="course-info">
+        <h2>{{adv.make}} <span class="text-blue-500">{{adv.model}} </span>
+                <h6 *ngIf="adv.priceSell" class="text-red-600 opacity-100" > VENDUTA</h6></h2>
+        <div class="grid">
+          <div class="col-12">
+            <p *ngIf="!adv.priceSell" id="line"><span class="text-color-secondary font-semibold">Prezzo: </span>{{adv.priceCop}} €</p>
+            <p *ngIf="adv.priceSell" id="line"><span class="text-color-secondary font-semibold">Venduta per: </span>{{adv.priceSell}} €</p>
+            <p><span class="text-color-secondary font-semibold">Alimentazione: </span>{{adv.powerSupply}}</p>
+          </div>
+          <div class="col-12">
+            <p><span class="text-color-secondary font-semibold">Anno: </span>{{adv.year}}</p>
+            <p><span class="text-color-secondary font-semibold">Cambio: </span>{{adv.gearbox}}</p>
+          </div>
+          <div class="col-12">
+            <p><span class="text-color-secondary font-semibold">Km: </span>{{adv.km}} km</p>
+            <p><span class="text-color-secondary font-semibold">Emissioni: </span>{{adv.emissionClass}}</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+

@@ -95,13 +95,14 @@ public class DealCarController {
 
     @PutMapping("{id}")
     public DealCar updateDealCar(
-            @PathVariable("id") Long id
-//            @RequestParam("name") String name
+            @PathVariable("id") Long id,
+            @RequestBody DealCar updateCar
     ) {
-
+        System.out.println(updateCar);
         DealCar dealCar = dealCarService.getById(id);
 
-        //TODO gestire il put
+        if (updateCar.getPriceSell() != null)
+            dealCar.setPriceSell(updateCar.getPriceSell());
 
         dealCarService.save(dealCar);
         return dealCar;

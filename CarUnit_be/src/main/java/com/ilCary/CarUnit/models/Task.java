@@ -1,9 +1,11 @@
 package com.ilCary.CarUnit.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Builder
 @Getter
@@ -11,7 +13,7 @@ import java.time.LocalDate;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "users")
+@Table(name = "task")
 public class Task {
 
     @Id
@@ -20,10 +22,13 @@ public class Task {
 
     private String title;
     private String description;
-    private LocalDate startDate;
-    private LocalDate deadLine;
+    private Date startDate;
+    private Date deadLine;
+
+    private boolean done;
 
     @ManyToOne
+    @JsonBackReference("task")
     @JoinColumn(name = "user_id")
     private User user;
 

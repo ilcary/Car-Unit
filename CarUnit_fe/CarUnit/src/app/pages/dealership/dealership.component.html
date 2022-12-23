@@ -1,48 +1,52 @@
+<p-toast></p-toast>
+
+
 <div *ngIf="!haveDealership" class="imgbox text-center">
   <h1 class="popi">404</h1>
   <h2>Non hai nessun concessionario al momento</h2>
   <img class="img404" src="../../../assets/page not found desktop.png" alt="Image" width="100%">
 </div>
 
-<div class="surface-ground px-4 py-5 md:px-6 lg:px-8">
-  <div class="text-center p-2 pb-4">
-    <h1>{{dealership?.name==undefined ? "--":dealership.name}}</h1>
-  </div>
+<section *ngIf="haveDealership">
+  <div class="surface-ground px-4 py-5 md:px-6 lg:px-8">
+    <div class="text-center p-2 pb-4">
+      <h1>{{dealership?.name==undefined ? "--":dealership.name}}</h1>
+    </div>
 
-  <div class="grid">
-    <div class="col-12 md:col-6">
-      <div class="surface-card shadow-2 p-3 border-round">
-        <div class="flex justify-content-between mb-3">
-          <div>
-            <span class="block text-500 font-medium mb-3">Auto aquistate questo mese</span>
-            <div class="text-900 font-medium text-xl">152</div>
+    <div class="grid">
+      <div class="col-12 md:col-6">
+        <div class="surface-card shadow-2 p-3 border-round">
+          <div class="flex justify-content-between mb-3">
+            <div>
+              <span class="block text-500 font-medium mb-3">Auto aquistate questo anno</span>
+              <div class="text-900 font-medium text-xl">{{dataDeal.totalCars}} </div>
+            </div>
+            <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
+              style="width:2.5rem;height:2.5rem">
+              <i class="pi pi-shopping-cart text-blue-500 text-xl"></i>
+            </div>
           </div>
-          <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
-            style="width:2.5rem;height:2.5rem">
-            <i class="pi pi-shopping-cart text-blue-500 text-xl"></i>
-          </div>
+          <span class="text-500">per una spesa totale di </span>
+          <span class="text-green-500 font-medium">{{dataDeal.totEurCarCop}} €</span>
         </div>
-        <span class="text-500">per una spesa totale di </span>
-        <span class="text-green-500 font-medium">24 new </span>
       </div>
-    </div>
-    <div class="col-12 md:col-6">
-      <div class="surface-card shadow-2 p-3 border-round">
-        <div class="flex justify-content-between mb-3">
-          <div>
-            <span class="block text-500 font-medium mb-3">Auto vendute questo mese</span>
-            <div class="text-900 font-medium text-xl">$2.100</div>
+      <div class="col-12 md:col-6">
+        <div class="surface-card shadow-2 p-3 border-round">
+          <div class="flex justify-content-between mb-3">
+            <div>
+              <span class="block text-500 font-medium mb-3">Auto vendute questo anno</span>
+              <div class="text-900 font-medium text-xl">{{dataDeal.soldCars}}</div>
+            </div>
+            <div class="flex align-items-center justify-content-center bg-orange-100 border-round"
+              style="width:2.5rem;height:2.5rem">
+              <i class="pi pi-map-marker text-orange-500 text-xl"></i>
+            </div>
           </div>
-          <div class="flex align-items-center justify-content-center bg-orange-100 border-round"
-            style="width:2.5rem;height:2.5rem">
-            <i class="pi pi-map-marker text-orange-500 text-xl"></i>
-          </div>
+          <span class="text-500">per un profitto totale di </span>
+          <span class="text-green-500 font-medium">{{dataDeal.profitCars}} €</span>
         </div>
-        <span class="text-500">per un profitto totale di </span>
-        <span class="text-green-500 font-medium">%52+ </span>
       </div>
-    </div>
-    <!-- <div class="col-12 md:col-6 lg:col-3">
+      <!-- <div class="col-12 md:col-6 lg:col-3">
           <div class="surface-card shadow-2 p-3 border-round">
               <div class="flex justify-content-between mb-3">
                   <div>
@@ -72,137 +76,256 @@
               <span class="text-500">popi</span>
           </div>
       </div> -->
-  </div>
-</div>
-
-<div class="surface-section px-4 pt-5 md:px-6 lg:px-8 text-center">
-  <div class="mb-3 font-bold text-3xl">
-    <span class="text-900">Console </span>
-    <span class="text-blue-600">CarUnit</span>
+    </div>
   </div>
 
-  <div class="grid mt-4">
-    <div hover-class="bg-blue-100" (click)="showNewCarDialog()"
-      class="col-12 md:col-4 mb-4 px-5 cursor-pointer border-round-2xl">
-      <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
-        <i class="pi pi-plus-circle text-4xl text-blue-500"></i>
-      </span>
-      <div class="text-900 text-xl mb-3 font-medium">Nuova auto</div>
-      <span class="text-700 line-height-3">Aggiungi un veicolo al parco auto</span>
+  <div class="surface-section px-4 pt-5 md:px-6 lg:px-8 text-center">
+    <div class="mb-3 font-bold text-3xl">
+      <span class="text-900">Console </span>
+      <span class="text-blue-600">CarUnit</span>
     </div>
 
-    <p-dialog header="Nuova auto" [(visible)]="displayNewCar" [draggable]="false" [style]="{height :'90vh',width :'90vw'}">
-
-      <app-form-deal-car [dealership]="dealership" ></app-form-deal-car>
-
-    </p-dialog>
-
-
-    <div hover-class="bg-blue-100" (click)="showSellCarDialog()" class="col-12 md:col-4 mb-4 px-5 cursor-pointer border-round-2xl">
-      <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
-        <i class="pi pi-money-bill text-4xl text-blue-500"></i>
-      </span>
-      <div class="text-900 text-xl mb-3 font-medium">Vendita auto</div>
-      <span class="text-700 line-height-3">Seleziona il veicolo venduto e aggiungi il prezzo di vendita</span>
-    </div>
-
-    <p-dialog header="Vendita auto" [(visible)]="displaySellCar" [draggable]="false" [style]="{height :'90vh',width :'90vw'}">
-
-
-
-    </p-dialog>
-
-
-    <div hover-class="bg-blue-100" (click)="showNewTaskDialog()" *ngIf="isCeo" class="col-12 md:col-4 mb-4 px-5 cursor-pointer border-round-2xl">
-      <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
-        <i class="pi pi-list text-4xl text-blue-500"></i>
-      </span>
-      <div class="text-900 text-xl mb-3 font-medium">Crea task <span class="text-yellow-500 font-medium">CEO</span>
+    <div class="grid mt-4">
+      <div hover-class="bg-blue-100" (click)="showNewCarDialog()"
+        class="col-12 md:col-4 mb-4 px-5 cursor-pointer border-round-2xl">
+        <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
+          <i class="pi pi-plus-circle text-4xl text-blue-500"></i>
+        </span>
+        <div class="text-900 text-xl mb-3 font-medium">Nuova auto</div>
+        <span class="text-700 line-height-3">Aggiungi un veicolo al parco auto</span>
       </div>
-      <span class="text-700 line-height-3">Crea un incarico specifico per un dipendente</span>
+
+      <p-dialog header="Nuova auto" [(visible)]="displayNewCar" [draggable]="false"
+        [style]="{height :'90vh',width :'90vw'}">
+
+        <app-form-deal-car [dealership]="dealership"></app-form-deal-car>
+
+      </p-dialog>
+
+
+      <div hover-class="bg-blue-100" (click)="showSellCarDialog()"
+        class="col-12 md:col-4 mb-4 px-5 cursor-pointer border-round-2xl">
+        <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
+          <i class="pi pi-money-bill text-4xl text-blue-500"></i>
+        </span>
+        <div class="text-900 text-xl mb-3 font-medium">Vendita auto</div>
+        <span class="text-700 line-height-3">Seleziona il veicolo venduto e aggiungi il prezzo di vendita</span>
+      </div>
+
+      <p-dialog header="Vendita auto" [(visible)]="displaySellCar" [draggable]="false"
+        [style]="{height :'90vh',width :'90vw'}">
+
+        <p-table [value]="dealCars" [tableStyle]="{'min-width': '50rem'}">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Marca</th>
+              <th>Modello</th>
+              <th>Anno</th>
+              <th>Vendita</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-product>
+            <tr>
+              <td>{{product.make}}</td>
+              <td>{{product.model}}</td>
+              <td>{{product.year}}</td>
+              <td>
+                <button #btnV *ngIf="product.priceSell" disabled pButton pRipple type="button" [label]="'Venduta per: '+product.priceSell+'€'"
+                  class="p-button-raised p-button-warning p-button-text"></button>
+                <button #btnV *ngIf="!product.priceSell" pButton pRipple type="button" label="Vendi" (click)="btnV.classList.add('hidden')"
+                  (click)="inputPrezzo.classList.remove('hidden')"
+                  class="p-button-raised p-button-success p-button-text"></button>
+                <div #inputPrezzo class="p-inputgroup hidden">
+                  <span class="p-inputgroup-addon">€</span>
+                  <input [(ngModel)]="priceOfSell" type="text" required class="max-w-10rem mr-2" pInputText
+                    placeholder="Prezzo">
+                  <button pButton pRipple type="button" icon="pi pi-check" (click)="sellCarSelected(product)"
+                    class="p-button-rounded p-button-success"></button>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+
+      </p-dialog>
+
+
+      <div hover-class="bg-blue-100" (click)="showNewTaskDialog()" *ngIf="isCeo"
+        class="col-12 md:col-4 mb-4 px-5 cursor-pointer border-round-2xl">
+        <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
+          <i class="pi pi-list text-4xl text-blue-500"></i>
+        </span>
+        <div class="text-900 text-xl mb-3 font-medium">Crea task <span class="text-yellow-500 font-medium">CEO</span>
+        </div>
+        <span class="text-700 line-height-3">Crea un incarico specifico per un dipendente</span>
+      </div>
+
+      <p-dialog header="Crea task" [(visible)]="displayNewTask" [draggable]="false"
+        [style]="{height :'50vh',width :'90vw'}">
+
+        <!-- <p-table [value]="employee" [tableStyle]="{'min-width': '50rem'}">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Username</th>
+            <th>Nome completo</th>
+            <th>azione</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-user>
+          <tr>
+            <td>{{user.username}}</td>
+            <td>{{user.name}} {{user.lastname}}</td>
+            <td> <button #btnV pButton pRipple type="button" label="Vendi" (click)=""  class="p-button-raised p-button-success p-button-text"></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table> -->
+
+        <form [formGroup]="formTask">
+          <div class="grid">
+
+            <div class="col-6">
+              <input type="text" class="w-full" pInputText formControlName="title" placeholder="Titolo" />
+            </div>
+            <div class="col-6">
+              <input type="text" class="w-full" pInputText formControlName="description" placeholder="Descrizione" />
+            </div>
+            <div class="col-6">
+              <p-dropdown [options]="employee" styleClass="w-full" optionLabel="username" placeholder="Utente"
+                formControlName="user"></p-dropdown>
+            </div>
+            <div class="col-6">
+              <p-calendar inputId="basic" styleClass="w-full" formControlName="deadLine" placeholder="Dead-line"
+                dateFormat="dd.mm.yy"></p-calendar>
+            </div>
+
+            <div class="col-6 col-offset-3 text-center">
+              <button pButton pRipple label="Aggiungi task" icon="pi pi-plus" (click)="submitTask()"
+                class="mr-1 p-1 p-button-success" [disabled]="!formTask.valid"></button>
+            </div>
+
+          </div>
+        </form>
+
+      </p-dialog>
+
+
+      <div hover-class="bg-blue-100" (click)="showEditTaskDialog()" *ngIf="!isCeo"
+        class="col-12 md:col-4 mb-4 px-5 cursor-pointer border-round-2xl">
+        <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
+          <i class="pi pi-list text-4xl text-blue-500"></i>
+        </span>
+        <div class="text-900 text-xl mb-3 font-medium">Gestisci task</div>
+        <span class="text-700 line-height-3">Gestisci lo stato dell'incarico attuale</span>
+      </div>
+
+      <p-dialog header="Gestisci task" [(visible)]="displayEditTask" [draggable]="false"
+        [style]="{height :'90vh',width :'90vw'}">
+
+        <p-card *ngFor="let task of userTasks" [header]="'Task: '+task.title"
+        [subheader]="'Dead-line: '+fromstringDatetoString(task.deadLine)" styleClass="bg-bluegray-50"
+        [style]="{'width': '25rem', 'margin-bottom': '2em'}">
+          <p>{{task.description}}</p>
+          <ng-template pTemplate="footer">
+            <p-button label="Completa" styleClass="p-1" icon="pi pi-check"></p-button>
+        </ng-template>
+      </p-card>
+      </p-dialog>
+
+
+      <div hover-class="bg-blue-100" (click)="showAddEmployeeDialog()" *ngIf="isCeo"
+        class="col-12 md:col-4 mb-4 px-5 cursor-pointer border-round-2xl">
+        <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
+          <i class="pi pi-user-plus text-4xl text-blue-500"></i>
+        </span>
+        <div class="text-900 text-xl mb-3 font-medium">Assumi dipendente <span
+            class="text-yellow-500 font-medium">CEO</span></div>
+        <span class="text-700 line-height-3">Aggiungi l'utente nella tua lista dipendenti</span>
+      </div>
+
+      <p-dialog header="Assumi dipendente" [(visible)]="displayAddEmployee" [draggable]="false"
+        [style]="{height :'50vh',width :'50vw'}">
+
+        <div class="col-8 col-offset-2">
+
+
+          <p-dropdown [options]="allUsers" [(ngModel)]="selectedNewUser" optionLabel="name" [filter]="true" filterBy="name" [showClear]="true" placeholder="Seleziona un utente" classStyle="w-full">
+            <ng-template pTemplate="selectedItem">
+              <div class="user-item user-item-value" *ngIf="selectedNewUser">
+                <div>{{selectedNewUser.name}}</div>
+              </div>
+            </ng-template>
+            <ng-template let-user pTemplate="item">
+              <div class="country-item">
+                <div>{{user.name}}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+        <p-button (click)="hireEmployee()" [disabled]="!selectedNewUser || selectedNewUser.username==actualUser.username" icon="pi pi-user-plus" styleClass="p-1 p-button-success mt-4" label="Assumi"></p-button>
+
+      </p-dialog>
+
+
+      <div hover-class="bg-blue-100" (click)="showDeleteEmployeeDialog()" *ngIf="isCeo"
+        class="col-12 md:col-4 mb-4 px-5 cursor-pointer border-round-2xl">
+        <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
+          <i class="pi pi-user-minus text-4xl text-blue-500"></i>
+        </span>
+        <div class="text-900 text-xl mb-3 font-medium">Rimuovi dipendente <span
+            class="text-yellow-500 font-medium">CEO</span></div>
+        <span class="text-700 line-height-3">Elimina l'utente dalla tua lista dipendenti</span>
+      </div>
+
+      <p-dialog header="Rimuovi dipendente" [(visible)]="displayDeleteEmployee" [draggable]="false"
+        [style]="{height :'50vh',width :'50vw'}">
+
+        <div class="col-6 col-offset-3">
+          <p-dropdown [options]="employee" styleClass="w-full" optionLabel="username" placeholder="Utente"
+            [(ngModel)]="deleteUser"></p-dropdown>
+            <p-button [disabled]="!deleteUser" label="Licenzia dipendente" (click)="dismissEmployee()" styleClass="p-1 p-button-danger mt-4" icon="pi pi-user-minus"></p-button>
+            <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+
+
+        </div>
+
+
+
+      </p-dialog>
+
+
+      <div hover-class="bg-blue-100" (click)="showUpdateDealershipDialog()" *ngIf="isCeo"
+        class="col-12 md:col-4 md:mb-4 mb-0 px-3 border-round-2xl">
+        <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
+          <i class="pi pi-file-edit text-4xl text-blue-500"></i>
+        </span>
+        <div class="text-900 text-xl mb-3 font-medium">Modifica concessionario <span
+            class="text-yellow-500 font-medium">CEO</span></div>
+        <span class="text-700 line-height-3">Modifica l'anagrafica e personalizza il tuo concessionario</span>
+      </div>
+
+      <p-dialog header="Modifica concessionario" [(visible)]="displayUpdateDealership" [draggable]="false"
+        [style]="{height :'90vh',width :'90vw'}">
+
+        <app-dealership-form (showSuccess)="showSuccess($event)" [dealership]="dealership" ></app-dealership-form>
+
+      </p-dialog>
+
+
     </div>
-
-    <p-dialog header="Crea task" [(visible)]="displayNewTask" [draggable]="false" [style]="{height :'90vh',width :'90vw'}">
-
-
-
-    </p-dialog>
-
-
-    <div hover-class="bg-blue-100" (click)="showEditTaskDialog()" *ngIf="!isCeo" class="col-12 md:col-4 mb-4 px-5 cursor-pointer border-round-2xl">
-      <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
-        <i class="pi pi-list text-4xl text-blue-500"></i>
-      </span>
-      <div class="text-900 text-xl mb-3 font-medium">Gestisci task</div>
-      <span class="text-700 line-height-3">Gestisci lo stato dell'incarico attuale</span>
-    </div>
-
-    <p-dialog header="Gestisci task" [(visible)]="displayEditTask" [draggable]="false" [style]="{height :'90vh',width :'90vw'}">
-
-
-
-    </p-dialog>
-
-
-    <div hover-class="bg-blue-100" (click)="showAdEmployeeDialog()" *ngIf="isCeo" class="col-12 md:col-4 mb-4 px-5 cursor-pointer border-round-2xl">
-      <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
-        <i class="pi pi-user-plus text-4xl text-blue-500"></i>
-      </span>
-      <div class="text-900 text-xl mb-3 font-medium">Aggiungi dipendente <span
-          class="text-yellow-500 font-medium">CEO</span></div>
-      <span class="text-700 line-height-3">Aggiungi l'utente nella tua lista dipendenti</span>
-    </div>
-
-    <p-dialog header="Aggiungi dipendente" [(visible)]="displayAdEmployee" [draggable]="false" [style]="{height :'90vh',width :'90vw'}">
-
-
-
-    </p-dialog>
-
-
-    <div hover-class="bg-blue-100" (click)="showDeleteEmployeeDialog()" *ngIf="isCeo" class="col-12 md:col-4 mb-4 px-5 cursor-pointer border-round-2xl">
-      <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
-        <i class="pi pi-user-minus text-4xl text-blue-500"></i>
-      </span>
-      <div class="text-900 text-xl mb-3 font-medium">Rimuovi dipendente <span
-          class="text-yellow-500 font-medium">CEO</span></div>
-      <span class="text-700 line-height-3">Elimina l'utente dalla tua lista dipendenti</span>
-    </div>
-
-    <p-dialog header="Rimuovi dipendente" [(visible)]="displayDeleteEmployee" [draggable]="false" [style]="{height :'90vh',width :'90vw'}">
-
-
-
-    </p-dialog>
-
-
-    <div hover-class="bg-blue-100" (click)="showUpdateDealershipDialog()" *ngIf="isCeo" class="col-12 md:col-4 md:mb-4 mb-0 px-3 border-round-2xl">
-      <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
-        <i class="pi pi-file-edit text-4xl text-blue-500"></i>
-      </span>
-      <div class="text-900 text-xl mb-3 font-medium">Modifica concessionario <span
-          class="text-yellow-500 font-medium">CEO</span></div>
-      <span class="text-700 line-height-3">Modifica l'anagrafica e personalizza il tuo concessionario</span>
-    </div>
-
-    <p-dialog header="Modifica concessionario" [(visible)]="displayUpdateDealership" [draggable]="false" [style]="{height :'90vh',width :'90vw'}">
-
-
-
-    </p-dialog>
-
-
   </div>
-</div>
 
 
+</section>
 
 
+  <div class="surface-section" *ngIf="haveDealership">
+    <div class="text-center p-2 pb-4 flex flex-column align-items-center">
+      <h1>Parco auto</h1>
 
+      <app-dealership-car-card *ngFor="let adv of dealCars" [adv]="adv"
+        (updateCars)="getActualDealCar()"></app-dealership-car-card>
 
-<div class="surface-section">
-  <div class="text-center p-2 pb-4">
-    <h1>Auto</h1>
-  </div>
+      <h2 *ngIf="dealCars==[]" class="mt-4">Non ci sono auto al momento...</h2>
 
-
+    </div>

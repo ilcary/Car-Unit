@@ -45,6 +45,13 @@ public class UserController {
         return userService.getById(id);
     }
 
+    @GetMapping("/makeItCeo/{id}")
+    public User makeItCeo(@PathVariable("id") Long id){
+        User u = userService.getById(id);
+        u.setCeo(true);
+        return userService.update(u);
+    }
+
     //---------------------------- Delete --------------------------------
 
     @DeleteMapping("/{id}")

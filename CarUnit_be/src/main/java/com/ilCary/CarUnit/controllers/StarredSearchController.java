@@ -68,9 +68,10 @@ public class StarredSearchController {
     //---------------------------- Delete --------------------------------
 
     @DeleteMapping("/{id}")
-    public String deleteStarredSearchById(@PathVariable("id") Long id) {
+    public StarredSearch deleteStarredSearchById(@PathVariable("id") Long id) {
+        StarredSearch s = starredSearchService.getById(id);
         starredSearchService.deleteById(id);
-        return "StarredSearch deleted successfully";
+        return s;
     }
 
     //---------------------------- Put --------------------------------

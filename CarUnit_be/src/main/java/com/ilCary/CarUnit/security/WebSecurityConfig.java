@@ -62,21 +62,30 @@ public class WebSecurityConfig {
                         "/api/CarAdv/search", "/api/stateAdv", "/api/stateAdv/getStateByid", "/api/stateAdv",
                         "/api/starredSearches/{username}",
                         "/api/dealerships/{userCeo_id}",
-                        "/api/DealCar/addNewDealCar/{id}"
+                        "/api/DealCar/addNewDealCar/{id}",
+                        "/api/tasks/addTaskToUser/{id}"
                 )
                 .permitAll()
                 .antMatchers(HttpMethod.GET,
-                        "/api/all-users", "/api/users", "/api/users/{id}",
+                        "/api/all-users", "/api/users", "/api/users/{id}","/api/users/makeItCeo/{id}",
                         "/api/comuni",
                         "/api/CarModels/{make}",
                         "/api/stateAdv/getStateByid",
                         "/api/starredSearches", "/api/starredSearches/{id}", "/api/starredSearches/getAllByUserId/{id}",
                         "/api/dealerships/userToDealership/{user_id}/{deal_id}", "/api/dealerships/{id}", "/api/dealerships/byCeoId/{id}","/api/dealerships/Employees/{id}","/api/dealerships/DealershipByEmployeesId/{id}",
-                        "/api/DealCar","/api/DealCar/getAllDealCar/{id}"
+                        "/api/DealCar","/api/DealCar/getAllDealCar/{id}",
+                        "/api/tasks/findByUserId/{id}",
+                        "/api/addresses/{id}"
                 )
                 .permitAll()
                 .antMatchers(HttpMethod.PUT,
-                        "/api/stateAdv/update", "/api/users/{id}")
+                        "/api/stateAdv/update",
+                        "/api/users/{id}",
+                        "/api/dealerships/{id}",
+                        "/api/DealCar/{id}",
+                        "/api/tasks/updateState/{id}")
+                .permitAll()
+                .antMatchers(HttpMethod.DELETE,"/api/dealerships/dismissEmployee/{id_dealer}/{id_user}","/api/starredSearches/{id}")
                 .permitAll()
                 .anyRequest()
                 .authenticated();

@@ -13,7 +13,7 @@
         <div class="control col-6 lg:col-4 xl:col-2">
           <p-dropdown styleClass="w-full" inputId="marca" [options]="marcheSubito" (onChange)="getModelliByMake($event)"
             placeholder="Marca" [showClear]="true" [virtualScrollItemSize]="30" [virtualScroll]="true"
-            formControlName="marca" [filter]="true" filterBy="marca">
+            formControlName="marca">
             <ng-template pTemplate="selectedItem" let-options="options">
               <div class="marca-item marca-item-value p-inputGroup" *ngIf="form.value.marca">
                 <div>{{form.value.marca}}</div>
@@ -420,12 +420,14 @@
                 <tr>
                     <th pSortableColumn="nameSearch">Nome ricerca<p-sortIcon field="nameSearch"></p-sortIcon></th>
                     <th pSortableColumn="marca">Marchio<p-sortIcon field="marca"></p-sortIcon></th>
+                    <th ><i class="pi pi-minus-circle"></i></th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-rowData let-search>
                 <tr [pSelectableRow]="rowData" (click)="firstAccord.toggle($event)" (click)="selectSearch(search)">
                     <td>{{search.nameSearch}}</td>
                     <td>{{search.marca}}</td>
+                    <td><button pButton pRipple (click)="deleteSearch(search)" type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text"></button></td>
                 </tr>
             </ng-template>
         </p-table>

@@ -1,0 +1,46 @@
+<form [formGroup]="form" class="signup-form">
+  <div class="grid">
+
+    <p-toast></p-toast>
+
+    <div class="col-6">
+      <label for="name" class="block text-900 font-medium">Nome</label>
+      <input id="name" type="text" pInputText class="w-full mb-3" formControlName="name">
+    </div>
+
+    <div formGroupName="address" class="col-6">
+      <label for="municipality" class="block text-900 font-medium">Comune</label>
+      <p-dropdown styleClass="w-full" inputId="municipality" [options]="comuni" optionLabel="comune" [filter]="true"
+        filterBy="comune" placeholder="seleziona un comune" [showClear]="true" [virtualScrollItemSize]="30"
+        [virtualScroll]="true" formControlName="municipality">
+        <ng-template pTemplate="selectedItem" let-options="options">
+          <div class="country-item country-item-value p-inputGroup" *ngIf="form.value.address.municipality">
+            <div>{{form.value.address.municipality.comune}}</div>
+          </div>
+        </ng-template>
+        <ng-template let-country pTemplate="item">
+          <div class="country-item">
+            <div>{{country.comune}}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+
+    <div formGroupName="address" class="col-6">
+      <label for="street" class="block text-900 font-medium">Via</label>
+      <input id="street" type="text" pInputText class="w-full mb-3" formControlName="street">
+    </div>
+
+    <div formGroupName="address" class="col-6">
+      <label for="streetNum" class="block text-900 font-medium">Civico</label>
+      <input id="streetNum" type="text" pInputText class="w-full" formControlName="streetNum">
+    </div>
+
+
+    <div class="col-6 col-offset-3 text-center">
+      <button pButton pRipple label="Aggiorna concessionario" icon="pi pi-sync" (click)="submit()"
+        class="mr-1 p-1 p-button-success" [disabled]="!form.valid"></button>
+    </div>
+
+  </div>
+</form>

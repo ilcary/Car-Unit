@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MessageService } from 'primeng/api';
@@ -19,7 +19,9 @@ export class FormDealCarComponent implements OnInit {
 
   @Input() dealership!: Dealership;
 
-  dataCar:IDealCar = {photos: []};
+  @Output() updateCars = new EventEmitter();
+
+  dataCar: IDealCar = { productImages: [] };
 
   uploadedFiles: any[] = [];
 
@@ -45,7 +47,7 @@ export class FormDealCarComponent implements OnInit {
     private messageService: MessageService,
     private httpClient: HttpClient,
     private sanitizer: DomSanitizer
-    ) { }
+  ) { }
 
   ngOnInit(): void {
 
@@ -100,61 +102,51 @@ export class FormDealCarComponent implements OnInit {
 
   submit() {
 
-    if(this.dealership.id){
+    if (this.dealership.id) {
 
+      this.dataCar.make = this.form.value.make;
+      this.dataCar.model = this.form.value.model;
+      this.dataCar.priceCop = this.form.value.priceCop;
+      this.dataCar.year = this.form.value.year;
+      this.dataCar.powerSupply = this.form.value.powerSupply;
+      this.dataCar.km = this.form.value.km;
+      this.dataCar.gearbox = this.form.value.gearbox;
+      this.dataCar.emissionClass = this.form.value.emissionClass;
 
-      this.dataCar.make =this.form.value.make;
-      this.dataCar.model =this.form.value.model;
-      this.dataCar.priceCop =this.form.value.priceCop;
-      this.dataCar.year =this.form.value.year;
-      this.dataCar.powerSupply =this.form.value.powerSupply;
-      this.dataCar.km =this.form.value.km;
-      this.dataCar.gearbox =this.form.value.gearbox;
-      this.dataCar.emissionClass =this.form.value.emissionClass;
+      console.log(this.dataCar);
 
-      // this.dataCar = {
-        //   make: this.form.value.make,
-        //   model: this.form.value.model,
-        //   priceCop: this.form.value.priceCop,
-        //   year: this.form.value.year,
-        //   km: this.form.value.km,
-        //   powerSupply: this.form.value.powerSupply,
-        //   gearbox: this.form.value.gearbox,
-        //   emissionClass: this.form.value.emissionClass,
-        // };
+      const productFormData = this.prepareFormData(this.dataCar)
 
-        console.log(this.dataCar);
+      console.log(productFormData);
 
-        const productFormData = this.prepareFormData(this.dataCar)
+      this.dealServ.saveDealCar(productFormData, this.dealership.id).subscribe({
+        next: (response: IDealCar) => {
+          console.log(response);
+          this.form.reset();
+          this.dataCar.productImages = [];
+          this.updateCars.emit();
+        },
+        error: (error: HttpErrorResponse) => {
+          console.log(error);
+        }
+      });
 
-        console.log(productFormData);
-
-        this.dealServ.saveDealCar(productFormData, this.dealership.id ).subscribe({
-          next: (response: IDealCar)=>{
-            console.log(response);
-            this.form.reset();
-          },
-          error: (error: HttpErrorResponse)=>{
-            console.log(error);
-          }
-        });
-
-      }
+    }
   }
 
-  prepareFormData(dealCar: IDealCar):FormData{
+  prepareFormData(dealCar: IDealCar): FormData {
     const formData = new FormData();
 
     formData.append(
       'dealCar',
-      new Blob([JSON.stringify(dealCar)], {type:"application/json"})
+      new Blob([JSON.stringify(dealCar)], { type: "application/json" })
     );
 
-    for(let i = 0; i < dealCar.photos?.length; i++){
+    for (let i = 0; i < dealCar.productImages?.length; i++) {
       formData.append(
         'imageFile',
-        dealCar.photos[i].file,
-        dealCar.photos[i].file.name
+        dealCar.productImages[i].file,
+        dealCar.productImages[i].file.name
       );
     }
     return formData;
@@ -164,6 +156,7 @@ export class FormDealCarComponent implements OnInit {
   onFileSelected(event: any) {
     console.log(event);
     if (event.currentFiles) {
+
       const file_ = event.currentFiles[0];
 
       const fileHandle: FileHandle = {
@@ -172,8 +165,33 @@ export class FormDealCarComponent implements OnInit {
           window.URL.createObjectURL(file_)
         )
       }
-      this.dataCar.photos.push(fileHandle)
+      this.dataCar.productImages.push(fileHandle)
     }
+
+    console.log(this.dataCar.productImages);
+
+
+  }
+
+  onFileSelected_(event: any) {
+    console.log(event);
+
+    if (event.currentFiles) {
+
+      for (let actualFile of event.currentFiles) {
+        const file_ = actualFile
+        const fileHandle: FileHandle = {
+          file: file_,
+          url: this.sanitizer.bypassSecurityTrustUrl(
+            window.URL.createObjectURL(file_)
+          )
+        }
+        this.dataCar.productImages.push(fileHandle)
+      }
+    }
+
+    console.log(this.dataCar.productImages);
+
 
   }
 

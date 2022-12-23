@@ -8,6 +8,7 @@ import { CarAdvService } from 'src/app/service/car-adv.service';
 import { ComuneService } from 'src/app/service/comune.service';
 import { MessageService } from 'primeng/api';
 import { severity } from 'src/app/models/severityEnum';
+import { HttpErrorResponse } from '@angular/common/http';
 
 type esito = {
   esito: boolean,
@@ -70,60 +71,7 @@ export class CrawlerComponent implements OnInit {
   selectedSearch!: ISearch;
 
 
-  annunci: ICarAdv[] = [
-    {
-      title: 'Vw Golf 1* 1.1 b GX popi popi',
-      placeAndDate: 'ISOLA VICENTINA (VI)',
-      price: '9.999 €',
-      condition: 'Usato',
-      year: '09/1983',
-      km: '54000 Km',
-      powerSupply: 'Benzina',
-      gearbox: 'Manuale',
-      emissionClass: '',
-      link: 'https://www.subito.it/auto/vw-golf-1-1-1-b-gx-54000km-perfetta-da-amatore-vicenza-468249552.htm',
-      photoLink: 'https://images.sbito.it/api/v1/sbt-ads-images-pro/images/8c/8c337c50-075a-496e-bd22-0e1a776fb15c?rule=card-desktop-large-1x-auto',
-    },
-    {
-      title: 'Vw Golf 1* 1.1 b GX',
-      placeAndDate: 'ISOLA VICENTINA (VI)',
-      price: '9.999 €',
-      condition: 'Usato',
-      year: '09/1983',
-      km: '54000 Km',
-      powerSupply: 'Benzina',
-      gearbox: 'Manuale',
-      emissionClass: '',
-      link: 'https://www.subito.it/auto/vw-golf-1-1-1-b-gx-54000km-perfetta-da-amatore-vicenza-468249552.htm',
-      photoLink: 'https://images.sbito.it/api/v1/sbt-ads-images-pro/images/8c/8c337c50-075a-496e-bd22-0e1a776fb15c?rule=card-desktop-large-1x-auto',
-    },
-    {
-      title: 'Vw Golf 1* 1.1 b GX luca pagliaccio',
-      placeAndDate: 'ISOLA VICENTINA (VI)',
-      price: '9.999 €',
-      condition: 'Usato',
-      year: '09/1983',
-      km: '54000 Km',
-      powerSupply: 'Benzina',
-      gearbox: 'Manuale',
-      emissionClass: '',
-      link: 'https://www.subito.it/auto/vw-golf-1-1-1-b-gx-54000km-perfetta-da-amatore-vicenza-468249552.htm',
-      photoLink: 'https://images.sbito.it/api/v1/sbt-ads-images-pro/images/8c/8c337c50-075a-496e-bd22-0e1a776fb15c?rule=card-desktop-large-1x-auto',
-    },
-    {
-      title: 'Vw Golf 1* 1.1 b GX',
-      placeAndDate: 'ISOLA VICENTINA (VI)',
-      price: '9.999 €',
-      condition: 'Usato',
-      year: '09/1983',
-      km: '54000 Km',
-      powerSupply: 'Benzina',
-      gearbox: 'Manuale',
-      emissionClass: '',
-      link: 'https://www.subito.it/auto/vw-golf-1-1-1-b-gx-54000km-perfetta-da-amatore-vicenza-468249552.htm',
-      photoLink: 'https://images.sbito.it/api/v1/sbt-ads-images-pro/images/8c/8c337c50-075a-496e-bd22-0e1a776fb15c?rule=card-desktop-large-1x-auto',
-    }
-  ];
+  annunci!: ICarAdv[];
 
   constructor(private comuneServ: ComuneService, private modelServ: CarAdvService, private auth: AuthService, private messageService: MessageService) {
     this.form = new FormGroup({
@@ -286,8 +234,27 @@ export class CrawlerComponent implements OnInit {
       .subscribe(data => {
         console.log(data);
         this.showNot("Perfetto", "Ricerca salvata con successo");
-
+        this.starredSearches.push(data)
+        console.log(this.starredSearches);
       })
+  }
+
+  deleteSearch(search: ISearch){
+    if(search.id)
+    this.modelServ.deleteSearch(search.id)
+    .subscribe({
+      next: (value) => {
+        console.log(value);
+        this.messageService.add({ severity: 'success', summary: "Ricerca eliminata", detail: 'La ricerca: '+value.nameSearch+' è stata eliminata con successo' });
+        this.starredSearches = this.starredSearches.filter(s => s.id !== value.id);
+        console.log(this.starredSearches);
+
+      },
+      error: (err: HttpErrorResponse) => {
+        this.messageService.add({ severity: 'error', summary: "Impossibile recuperare gli utenti di CARUNIT", detail: err.message });
+
+      },
+    })
   }
 
   showNot(title: string, message: string) {
@@ -339,6 +306,8 @@ export class CrawlerComponent implements OnInit {
       .subscribe(data => {
         console.log(data);
         this.showNot("Perfetto", "Ricerca salvata con successo");
+        this.starredSearches.push(data)
+        console.log(this.starredSearches);
       })
 
     this.messageService.clear('c');

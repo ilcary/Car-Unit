@@ -24,7 +24,7 @@ export class HeaderComponent implements OnInit {
 
     this.items = [
       { label: '<h3>Home</h3>', icon: 'pi pi-fw pi-home', routerLink: 'home',escape: false },
-      { label: '<h3>Calendario</h3>', icon: 'pi pi-fw pi-calendar',escape: false, },
+      { label: '<h3>Misc</h3>', icon: 'pi pi-fw pi-calendar',routerLink: 'misc' , escape: false, },
       { label: '<h3>Concessionario</h3>', icon: 'pi pi-fw pi-car', routerLink: 'dealership',escape: false, },
       { label: '<h3>Annunci</h3>', icon: 'pi pi-fw pi-search-plus', routerLink: 'crawler' ,escape: false,},
       { label: '<h3>Aiuto</h3>', icon: 'pi pi-fw pi-info-circle',escape: false, },
@@ -72,6 +72,12 @@ export class HeaderComponent implements OnInit {
         {
           this.visible = true;
           this.activeItem=this.items[3];
+          break;
+        }
+        case '/misc':
+        {
+          this.visible = true;
+          this.activeItem=this.items[1];
           break;
         }
 

@@ -5,6 +5,7 @@ import com.ilCary.CarUnit.DTO.converter.UserConverter;
 import com.ilCary.CarUnit.DTOs.DealershipDTO;
 import com.ilCary.CarUnit.models.Dealership;
 import com.ilCary.CarUnit.models.User;
+import com.ilCary.CarUnit.services.AddressService;
 import com.ilCary.CarUnit.services.DealershipService;
 import com.ilCary.CarUnit.services.UserService;
 import org.slf4j.Logger;
@@ -29,6 +30,9 @@ public class DealershipController {
 
     @Autowired
     private UserService userService;
+
+     @Autowired
+     private AddressService addressService;
 
     //---------------------------- Post --------------------------------
 
@@ -98,26 +102,38 @@ public class DealershipController {
         return "Dealership deleted successfully";
     }
 
+    @DeleteMapping("dismissEmployee/{id_dealer}/{id_user}")
+    public Dealership dismissEmployee(@PathVariable("id_dealer") Long id_dealer,@PathVariable("id_user") Long id_user){
+        Dealership d = dealershipService.getById(id_dealer);
+        d.getEmployees().removeIf(user -> user.getId() == id_user);
+        User u = userService.getById(id_user);
+        u.setDealership(null);
+        userService.update(u);
+        return dealershipService.save(d);
+    }
+
     //---------------------------- Put --------------------------------
 
     @PutMapping("{id}")
     public Dealership updateDealership(
             @PathVariable("id") Long id,
-            @RequestBody DealershipDTO dto
+            @RequestBody Dealership updateDealership
     ) {
 
+        System.err.println(updateDealership);
         Dealership dealership = dealershipService.getById(id);
-        Dealership updateDealership = dealershipConverter.dtoToEntity(dto);
 
-        if (updateDealership.getAddress() != null)
-            dealership.setAddress(updateDealership.getAddress());
+        if (updateDealership.getAddress().getId() != null){
+            dealership.setAddress(addressService.getById(updateDealership.getAddress().getId()));
+        }else {
+            dealership.setAddress(addressService.save(updateDealership.getAddress()));
+        }
         if (updateDealership.getCeo() != null)
             dealership.setCeo(updateDealership.getCeo());
-        if (updateDealership.getAddress() != null)
+        if (updateDealership.getName() != null)
             dealership.setName(updateDealership.getName());
         if (updateDealership.getEmployees()!= null)
             dealership.setEmployees(updateDealership.getEmployees());
-
 
         dealershipService.save(dealership);
         return dealership;

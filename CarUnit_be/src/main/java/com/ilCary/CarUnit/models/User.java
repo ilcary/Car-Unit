@@ -29,6 +29,8 @@ public class User {
 
     private String lastname;
 
+    private boolean ceo;
+
     @Column(unique = true, nullable = false)
     private String username;
 
@@ -36,6 +38,7 @@ public class User {
     private String email;
 
     @OneToMany(mappedBy="user")
+    @JsonManagedReference("task")
     private List<Task> tasks;
 
     @OneToMany(mappedBy="user")
