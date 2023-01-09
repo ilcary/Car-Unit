@@ -352,6 +352,7 @@ export class DealershipComponent implements OnInit {
           },
           complete: () => {
             this.displayAddEmployee = false;
+            this.employee.push(this.selectedNewUser);
             this.messageService.add({ severity: 'success', summary: "Utente aggiunto", detail: "L'utente " + this.selectedNewUser.name + " è stato assunto correttamente" });
           }
         })
@@ -375,6 +376,8 @@ export class DealershipComponent implements OnInit {
                 console.log(response);
                 this.messageService.add({ severity: 'info', summary: 'Confermato', detail: 'Utente licenziato dal concessionario ' + response.name });
                 this.displayDeleteEmployee = false;
+                const index = this.employee.indexOf(this.deleteUser)
+                this.employee.splice(index, 1);
               },
               error: (error: HttpErrorResponse) => {
                 console.log(error);
